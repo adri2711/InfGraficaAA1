@@ -1,4 +1,5 @@
 #pragma once
+#include "objects/Model.h"
 #include "Renderer.h"
 #include "Program.h"
 #include <stdio.h>
@@ -13,6 +14,10 @@ class AA1 :
     Program* program;
     GLuint VAO;
     GLuint VBO;
+
+    Model* catModel;
+    float elapsedTime;
+    float speed = 63.f;
 
 public:
     AA1(int width, int height);
