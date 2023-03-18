@@ -1,13 +1,32 @@
 #pragma warning(disable: 4996)
 #include "objects/Model.h"
 
-Model::Model(const char* path)
+Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 view, float angle, glm::vec3 model,
+             glm::vec3 projection): Object(view, angle, model, projection)
 {
-	loadOBJ(path);
+	InitModel(modelPath, shaderPath);
+}
+
+Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 view, glm::vec3 projection): Object(view, projection)
+{
+	InitModel(modelPath, shaderPath);
+}
+
+Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 view): Object(view)
+{
+	InitModel(modelPath, shaderPath);
+}
+
+void Model::InitModel(const char* modelPath, const char* shaderPath)
+{
+	std::string vertexPath = std::string(shaderPath).append(".vert");
+	std::string fragmentPath = std::string(shaderPath).append(".frag");
+
+	loadOBJ(modelPath);
 	// Initialize program
-	program = new Program("Cube");
-	program->compileAndAttachShader("shaders/Object.vert", GL_VERTEX_SHADER, "vertex");
-	program->compileAndAttachShader("shaders/Object.frag", GL_FRAGMENT_SHADER, "fragment");
+	program = new Program("Model");
+	program->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
+	program->compileAndAttachShader(fragmentPath.c_str(), GL_FRAGMENT_SHADER, "fragment");
 
 	// Bind Attrib locations
 	program->bindAttribLocation(0, "in_Position");
@@ -35,6 +54,7 @@ Model::Model(const char* path)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+
 Model::~Model()
 {
 	glDeleteBuffers(3, VBO);
@@ -47,48 +67,8 @@ bool Model::loadOBJ(const char* path)
 	return loadOBJ(path, vertices, uvs, normals);
 }
 
-void Model::setTransforms(glm::mat4 objMat, CameraTransforms cam)
-{
-	this->objMat = objMat;
-	this->cam = cam;
-}
-
-void Model::setColor(glm::vec4 color)
-{
-	this->color = color;
-}
-
-void Model::draw()
-{
-	glBindVertexArray(VAO);
-	program->use();
-
-	glUniformMatrix4fv(
-		program->getUniform("objMat"),
-		1, GL_FALSE, glm::value_ptr(objMat)
-	);
-	glUniformMatrix4fv(
-		program->getUniform("mv_Mat"),
-		1, GL_FALSE, glm::value_ptr(cam._modelView)
-	);
-	glUniformMatrix4fv(
-		program->getUniform("mvpMat"),
-		1, GL_FALSE, glm::value_ptr(cam._MVP)
-	);
-	glUniform4f(
-		program->getUniform("color"),
-		color.r, color.g, color.b, color.w
-	);
-
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-
-	program->unuse();
-	glBindVertexArray(0);
-}
-
 bool Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std::vector<glm::vec2>& out_uvs, std::vector<glm::vec3>& out_normals)
-{
-	
+{	
 	std::vector< unsigned int > vertexIndices, uvIndices, normalIndices;
 	std::vector< glm::vec3 > temp_vertices;
 	std::vector< glm::vec2 > temp_uvs;
@@ -159,4 +139,47 @@ bool Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std:
 		out_uvs.push_back(uv);
 	}
 	return true;
+}
+
+std::vector< glm::vec3 > Model::GetVertices()
+{
+	return vertices;
+}
+
+std::vector<glm::vec3> Model::GetNormals()
+{
+	return normals;
+}
+
+std::vector<glm::vec2> Model::GetUvs()
+{
+	return uvs;
+}
+
+void Model::draw()
+{
+	glBindVertexArray(VAO);
+	program->use();
+    
+	glUniformMatrix4fv(
+		program->getUniform("objectMatrix"),
+		1, GL_FALSE, glm::value_ptr(_objectMatrix)
+	);
+	glUniformMatrix4fv(
+		program->getUniform("mv_Matrix"),
+		1, GL_FALSE, glm::value_ptr(cam._modelView)
+	);
+	glUniformMatrix4fv(
+		program->getUniform("mvpMatrix"),
+		1, GL_FALSE, glm::value_ptr(cam._MVP)
+	);
+	glUniform4f(
+		program->getUniform("color"),
+		color.r, color.g, color.b, color.w
+	);
+
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
+	program->unuse();
+	glBindVertexArray(0);
 }

@@ -1,6 +1,6 @@
 #include <objects/Cube.h>
 
-Cube::Cube()
+Cube::Cube(glm::vec3 position): Object(position)
 {
 	// Define vertexs, norms and indexs
 	const float halfW = 0.5f;
@@ -16,21 +16,21 @@ Cube::Cube()
 
 	glm::vec3 verts[] = {
 		glm::vec3(-halfW, -halfW, -halfW),
-		glm::vec3(-halfW, -halfW,  halfW),
-		glm::vec3(halfW, -halfW,  halfW),
+		glm::vec3(-halfW, -halfW, halfW),
+		glm::vec3(halfW, -halfW, halfW),
 		glm::vec3(halfW, -halfW, -halfW),
-		glm::vec3(-halfW,  halfW, -halfW),
-		glm::vec3(-halfW,  halfW,  halfW),
-		glm::vec3(halfW,  halfW,  halfW),
-		glm::vec3(halfW,  halfW, -halfW)
+		glm::vec3(-halfW, halfW, -halfW),
+		glm::vec3(-halfW, halfW, halfW),
+		glm::vec3(halfW, halfW, halfW),
+		glm::vec3(halfW, halfW, -halfW)
 	};
 	glm::vec3 norms[] = {
-		glm::vec3(0.f, -1.f,  0.f),
-		glm::vec3(0.f,  1.f,  0.f),
-		glm::vec3(-1.f,  0.f,  0.f),
-		glm::vec3(1.f,  0.f,  0.f),
-		glm::vec3(0.f,  0.f, -1.f),
-		glm::vec3(0.f,  0.f,  1.f)
+		glm::vec3(0.f, -1.f, 0.f),
+		glm::vec3(0.f, 1.f, 0.f),
+		glm::vec3(-1.f, 0.f, 0.f),
+		glm::vec3(1.f, 0.f, 0.f),
+		glm::vec3(0.f, 0.f, -1.f),
+		glm::vec3(0.f, 0.f, 1.f)
 	};
 
 	glm::vec3 cubeVerts[] = {
@@ -99,17 +99,6 @@ Cube::~Cube()
 	glDeleteBuffers(3, VBO);
 	glDeleteVertexArrays(1, &VAO);
 	delete program;
-}
-
-void Cube::setTransforms(glm::mat4 objMat, CameraTransforms cam)
-{
-	this->objMat = objMat;
-	this->cam = cam;
-}
-
-void Cube::setColor(glm::vec4 color)
-{
-	this->color = color;
 }
 
 void Cube::draw()

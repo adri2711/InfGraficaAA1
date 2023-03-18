@@ -4,14 +4,15 @@
 #include <Program.h>
 #include <renderers/Renderer.h>
 
-class Cube
+#include "Object.h"
+
+class Cube : public Object
 {
 public:
-	Cube();
+	Cube(glm::vec3 position);
 	~Cube();
-	void setTransforms(glm::mat4 objMat, CameraTransforms cam);
-	void setColor(glm::vec4 color);
-	void draw();
+	void draw() override;
+	
 private:
 	GLuint VAO;
 	GLuint VBO[3];
