@@ -6,7 +6,7 @@ Renderer::Renderer(int width, int height)
 	glClearColor(bgColor[0],bgColor[1],bgColor[2],bgColor[3]);
 	glClearDepth(1.f);
 
-	cam._projection = glm::perspective(FOV, (float)width / (float)height, zNear, zFar);
+	_cam._projection = glm::perspective(FOV, (float)width / (float)height, zNear, zFar);
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -27,7 +27,10 @@ void Renderer::GUI()
 
 		/////////////////////////////////////////////////////TODO
 		// Do your GUI code here....
-
+		/*ImGui::SliderFloat("X PositionLight", &_lightPosition.x, -10, 10);
+		ImGui::SliderFloat("Y PositionLight", &_lightPosition.y, -10, 10);
+		ImGui::SliderFloat("Z PositionLight", &_lightPosition.z, -10, 10);*/
+		
 		// Reset the camera position
 		if (ImGui::Button("Reset Camera")) {
 			panv[0] = panv[1] = panv[2] = 0.f;
@@ -80,22 +83,22 @@ void Renderer::GLmousecb(MouseEvent ev)
 void Renderer::GLResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
-	if (height != 0) cam._projection = glm::perspective(FOV, (float)width / (float)height, zNear, zFar);
-	else cam._projection = glm::perspective(FOV, 0.f, zNear, zFar);
+	if (height != 0) _cam._projection = glm::perspective(FOV, (float)width / (float)height, zNear, zFar);
+	else _cam._projection = glm::perspective(FOV, 0.f, zNear, zFar);
 }
 
 void Renderer::GLrender(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	cam._modelView = glm::mat4(1.f);
-	cam._modelView = glm::translate(cam._modelView, glm::vec3(panv[0], panv[1], panv[2]));
-	cam._cameraRotationMat = glm::rotate(glm::mat4(), rota[1], glm::vec3(1.f, 0.f, 0.f));
-	cam._cameraRotationMat = glm::rotate(cam._cameraRotationMat, rota[0], glm::vec3(0.f, 1.f, 0.f));
+	_cam._modelView = glm::mat4(1.f);
+	_cam._modelView = glm::translate(_cam._modelView, glm::vec3(panv[0], panv[1], panv[2]));
+	_cam._cameraRotationMat = glm::rotate(glm::mat4(), rota[1], glm::vec3(1.f, 0.f, 0.f));
+	_cam._cameraRotationMat = glm::rotate(_cam._cameraRotationMat, rota[0], glm::vec3(0.f, 1.f, 0.f));
 
-	cam._modelView *= cam._cameraRotationMat;
+	_cam._modelView *= _cam._cameraRotationMat;
 
-	cam._MVP = cam._projection * cam._modelView;
+	_cam._MVP = _cam._projection * _cam._modelView;
 
 	/////////////////////////////////////////////////////TODO
 	// Do your render code here

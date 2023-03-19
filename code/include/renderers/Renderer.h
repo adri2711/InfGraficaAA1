@@ -33,7 +33,9 @@ protected:
 	float zNear = 1.f;
 	float zFar = 50.f;
 
-	CameraTransforms cam;
+	glm::vec3 _lightPosition;
+
+	CameraTransforms _cam;
 
 	struct prevMouse {
 		float lastx, lasty;

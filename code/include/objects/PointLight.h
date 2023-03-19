@@ -11,9 +11,9 @@ private:
 
 public:
 
-    PointLight(const char* shaderPath, glm::vec3 color, float _radiantPower, glm::vec3 view, float angle, glm::vec3 model, glm::vec3 projection);
-    PointLight(const char* shaderPath, glm::vec3 color, float _radiantPower, glm::vec3 view, glm::vec3 projection);
-    PointLight(const char* shaderPath, glm::vec3 color, float _radiantPower, glm::vec3 view);
+    PointLight(const char* shaderPath, glm::vec3 color, float _radiantPower, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
+    PointLight(const char* shaderPath, glm::vec3 color, float _radiantPower, glm::vec3 position, glm::vec3 scale);
+    PointLight(const char* shaderPath, glm::vec3 color, float _radiantPower, glm::vec3 position);
     ~PointLight();
 
     void SetRadiantPower(float radiantPower);

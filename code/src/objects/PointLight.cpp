@@ -1,18 +1,18 @@
 #include <objects/PointLight.h>
 
-PointLight::PointLight(const char* shaderPath, glm::vec3 color, float radiantPower, glm::vec3 view, float angle, glm::vec3 model, glm::vec3 projection):
-    Object(view, angle, model, projection), _radiantPower(radiantPower)
+PointLight::PointLight(const char* shaderPath, glm::vec3 color, float radiantPower, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale):
+    Object(position, angle, rotation, scale), _radiantPower(radiantPower)
 {
     Illuminate(shaderPath);
 }
 
-PointLight::PointLight(const char* shaderPath, glm::vec3 color, float radiantPower, glm::vec3 view, glm::vec3 projection):
-    Object(view, projection), _radiantPower(radiantPower)
+PointLight::PointLight(const char* shaderPath, glm::vec3 color, float radiantPower, glm::vec3 position, glm::vec3 scale):
+    Object(position, scale), _radiantPower(radiantPower)
 {
     Illuminate(shaderPath);
 }
 
-PointLight::PointLight(const char* shaderPath, glm::vec3 color, float radiantPower, glm::vec3 view) : Object(view), _radiantPower(radiantPower)
+PointLight::PointLight(const char* shaderPath, glm::vec3 color, float radiantPower, glm::vec3 position) : Object(position), _radiantPower(radiantPower)
 {
     Illuminate(shaderPath);
 }
@@ -63,11 +63,11 @@ void PointLight::draw()
     );
     glUniformMatrix4fv(
         program->getUniform("mv_Matrix"),
-        1, GL_FALSE, glm::value_ptr(cam._modelView)
+        1, GL_FALSE, glm::value_ptr(_cam._modelView)
     );
     glUniformMatrix4fv(
         program->getUniform("mvpMatrix"),
-        1, GL_FALSE, glm::value_ptr(cam._MVP)
+        1, GL_FALSE, glm::value_ptr(_cam._MVP)
     );
     glUniform4f(
         program->getUniform("color"),

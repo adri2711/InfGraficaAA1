@@ -77,7 +77,7 @@ void ExPlacementTriangles::render(float dt)
 	view = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -10.0f));
 	objMat = view * model;
 	glUniformMatrix4fv(objMatLoc, 1, GL_FALSE, glm::value_ptr(objMat));
-	glUniformMatrix4fv(mvpMatLoc, 1, GL_FALSE, glm::value_ptr(cam._MVP));
+	glUniformMatrix4fv(mvpMatLoc, 1, GL_FALSE, glm::value_ptr(_cam._MVP));
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	// Draw right triangle (blue)
@@ -86,7 +86,7 @@ void ExPlacementTriangles::render(float dt)
 	view = glm::translate(glm::mat4(), glm::vec3(2.0f, 0.0f, -10.0f));
 	objMat = view * model;
 	glUniformMatrix4fv(objMatLoc, 1, GL_FALSE, glm::value_ptr(objMat));
-	glUniformMatrix4fv(mvpMatLoc, 1, GL_FALSE, glm::value_ptr(cam._MVP));
+	glUniformMatrix4fv(mvpMatLoc, 1, GL_FALSE, glm::value_ptr(_cam._MVP));
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	// Draw left triangle (green)
@@ -95,6 +95,6 @@ void ExPlacementTriangles::render(float dt)
 	view = glm::translate(glm::mat4(), glm::vec3(-2.0f, 0.0f, -10.0f));
 	objMat = view * model;
 	glUniformMatrix4fv(objMatLoc, 1, GL_FALSE, glm::value_ptr(objMat));
-	glUniformMatrix4fv(mvpMatLoc, 1, GL_FALSE, glm::value_ptr(cam._MVP));
+	glUniformMatrix4fv(mvpMatLoc, 1, GL_FALSE, glm::value_ptr(_cam._MVP));
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }

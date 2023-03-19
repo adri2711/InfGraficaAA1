@@ -25,6 +25,11 @@ Object::Object(glm::vec3 position)
     _objectMatrix = _view;
 }
 
+Object::Object()
+{
+    
+}
+
 Object::~Object()
 {
     
@@ -72,7 +77,7 @@ glm::mat4 Object::GetObjectMatrix()
 
 void Object::setCam(CameraTransforms cam)
 {    
-    this->cam = cam;
+    this->_cam = cam;
 }
 
 void Object::setColor(glm::vec4 color)

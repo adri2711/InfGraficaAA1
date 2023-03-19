@@ -1,22 +1,19 @@
 #pragma once
 #include <vector>
 #include "glm//glm.hpp"
-#include <GL/glew.h>
 #include <glm\gtc\type_ptr.hpp>
-#include <Program.h>
-#include <renderers/Renderer.h>
 
 #include "Object.h"
 
 class Model : public Object
 {
 public:
-	Model(const char* modelPath, const char* shaderPath, glm::vec3 view, float angle, glm::vec3 model, glm::vec3 projection);
-	Model(const char* modelPath, const char* shaderPath, glm::vec3 view, glm::vec3 projection);
-	Model(const char* modelPath, const char* shaderPath, glm::vec3 view);
+	Model(const char* modelPath, const char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
+	Model(const char* modelPath, const char* shaderPath, glm::vec3 position, glm::vec3 scale);
+	Model(const char* modelPath, const char* shaderPath, glm::vec3 position);
+	Model(const char* modelPath, const char* shaderPath);
 	void InitModel(const char* modelPath, const char* shaderPath);
 	~Model();
-	bool loadOBJ(const char* path);
 
 	std::vector< glm::vec3 > GetVertices();
 	std::vector< glm::vec2 > GetUvs();

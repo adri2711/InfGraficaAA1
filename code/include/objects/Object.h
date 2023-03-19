@@ -18,7 +18,7 @@ protected:
     glm::mat4 _projection;
     glm::mat4 _objectMatrix;
 
-    CameraTransforms cam;
+    CameraTransforms _cam;
     glm::vec4 color;
     
     GLuint VAO;
@@ -34,6 +34,7 @@ public:
     Object(glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
     Object(glm::vec3 position, glm::vec3 scale);
     Object(glm::vec3 position);
+    Object();
     ~Object();
 
     void Move(glm::vec3 position);
@@ -45,7 +46,7 @@ public:
     glm::mat4 GetModel();
     glm::mat4 GetProjection();
     glm::mat4 GetObjectMatrix();
-    
+
     void setCam(CameraTransforms cam);
     void setColor(glm::vec4 color);
     virtual void draw() = 0;

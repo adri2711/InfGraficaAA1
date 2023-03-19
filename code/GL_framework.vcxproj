@@ -311,6 +311,8 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
     <None Include="shaders\triangle.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="shaders\Cube.frag" />
+    <Content Include="shaders\Cube.vert" />
     <Content Include="shaders\Model.frag" />
     <Content Include="shaders\Model.vert" />
     <Content Include="shaders\PointLight.frag" />

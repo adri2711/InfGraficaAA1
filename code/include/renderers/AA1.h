@@ -17,7 +17,7 @@ private:
     
     PointLight* _pointLight;
 
-    Cube* _lightEmissor; 
+    Cube* _lightEmissor;
     
     float elapsedTime;
     float speed = 63.f;
@@ -25,12 +25,10 @@ private:
 public:
     AA1(int width, int height);
     ~AA1();
-
-    void setTransforms(glm::mat4 objectMatrix, CameraTransforms cam);
     
 protected:
     void render(float dt);
     void RenderCat(float elapsedTime);
-    void RenderPointLight(float dt);
-    void RenderLightEmissor(float dt);
+    void RenderPointLight();
+    void RenderLightEmissor();
 };

@@ -1,18 +1,23 @@
 #pragma warning(disable: 4996)
 #include "objects/Model.h"
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 view, float angle, glm::vec3 model,
-             glm::vec3 projection): Object(view, angle, model, projection)
+Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation,
+             glm::vec3 scale): Object(position, angle, rotation, scale)
 {
 	InitModel(modelPath, shaderPath);
 }
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 view, glm::vec3 projection): Object(view, projection)
+Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
 {
 	InitModel(modelPath, shaderPath);
 }
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 view): Object(view)
+Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position): Object(position)
+{
+	InitModel(modelPath, shaderPath);
+}
+
+Model::Model(const char* modelPath, const char* shaderPath): Object()
 {
 	InitModel(modelPath, shaderPath);
 }
@@ -22,7 +27,7 @@ void Model::InitModel(const char* modelPath, const char* shaderPath)
 	std::string vertexPath = std::string(shaderPath).append(".vert");
 	std::string fragmentPath = std::string(shaderPath).append(".frag");
 
-	loadOBJ(modelPath);
+	loadOBJ(modelPath, vertices, uvs, normals);
 	// Initialize program
 	program = new Program("Model");
 	program->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
@@ -60,11 +65,6 @@ Model::~Model()
 	glDeleteBuffers(3, VBO);
 	glDeleteVertexArrays(1, &VAO);
 	delete program;
-}
-
-bool Model::loadOBJ(const char* path)
-{
-	return loadOBJ(path, vertices, uvs, normals);
 }
 
 bool Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std::vector<glm::vec2>& out_uvs, std::vector<glm::vec3>& out_normals)
@@ -167,11 +167,11 @@ void Model::draw()
 	);
 	glUniformMatrix4fv(
 		program->getUniform("mv_Matrix"),
-		1, GL_FALSE, glm::value_ptr(cam._modelView)
+		1, GL_FALSE, glm::value_ptr(_cam._modelView)
 	);
 	glUniformMatrix4fv(
 		program->getUniform("mvpMatrix"),
-		1, GL_FALSE, glm::value_ptr(cam._MVP)
+		1, GL_FALSE, glm::value_ptr(_cam._MVP)
 	);
 	glUniform4f(
 		program->getUniform("color"),

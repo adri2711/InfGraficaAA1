@@ -1,6 +1,6 @@
 #include <objects/Cube.h>
 
-Cube::Cube(glm::vec3 position): Object(position)
+Cube::Cube(const char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
 {
 	// Define vertexs, norms and indexs
 	const float halfW = 0.5f;
@@ -80,11 +80,14 @@ Cube::Cube(glm::vec3 position): Object(position)
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	
+	std::string vertexPath = std::string(shaderPath).append(".vert");
+	std::string fragmentPath = std::string(shaderPath).append(".frag");
+	
 	// Initialize program
 	program = new Program("Cube");
-	program->compileAndAttachShader("shaders/Cube.vert", GL_VERTEX_SHADER, "vertex");
-	program->compileAndAttachShader("shaders/Cube.frag", GL_FRAGMENT_SHADER, "fragment");
+	program->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
+	program->compileAndAttachShader(fragmentPath.c_str(), GL_FRAGMENT_SHADER, "fragment");
 
 	// Bind Attrib locations
 	program->bindAttribLocation(0, "in_Position");
