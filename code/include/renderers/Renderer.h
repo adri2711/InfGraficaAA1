@@ -43,6 +43,8 @@ protected:
 	float zFar = 50.f;
 
 	glm::vec3 _lightPosition;
+	glm::vec4 _lightColor;
+	float _radiantPower;
 
 	CameraTransforms _cam;
 

@@ -4,6 +4,7 @@
 AA1::AA1(int width, int height) : Renderer(width, height)
 {
 	_lightPosition = glm::vec3(0.0f, -0.3f, -3.0f);
+	_radiantPower = 20.f;
 	catModel = new Model("resources/a_man.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), glm::vec3(1.f, 1.f, 1.f));
 	_pointLight = new PointLight("shaders/PointLight", glm::vec3(1.f,1.f,1.f),20, _lightPosition);
 	_lightEmissor = new Cube("shaders/Cube", _lightPosition, glm::vec3(1.f, 1.f, 1.f));
@@ -28,7 +29,7 @@ void AA1::RenderCat(float elapsedTime)
 {
 	catModel->Rotate((int) (elapsedTime * speed) % 360, glm::vec3(0.0f, 1.0f, 0.0f));
 	catModel->SetObjectMatrix(catModel->GetTranslationMatrix() * catModel->GetRotationMatrix());
-	catModel->setColor(glm::vec4(0, 0, 1, 1));
+	catModel->setColor(glm::vec4(0.f, 0.f, 1.f, 1.f));
 	catModel->setCam(_cam);
 	catModel->draw();    
 }

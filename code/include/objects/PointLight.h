@@ -16,10 +16,6 @@ public:
     PointLight(const char* shaderPath, glm::vec3 color, float _radiantPower, glm::vec3 position);
     ~PointLight();
 
-    void SetRadiantPower(float radiantPower);
-
-    float GetRadiantPower();
-
     void draw() override;
     
 };
