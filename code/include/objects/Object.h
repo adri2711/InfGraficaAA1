@@ -13,9 +13,10 @@ protected:
     glm::vec3 _rotation;
     glm::vec3 _scale;
 
-    glm::mat4 _view;
-    glm::mat4 _model;
-    glm::mat4 _projection;
+    glm::mat4 _translationMatrix;
+    glm::mat4 _rotationMatrix;
+    glm::mat4 _scaleMatrix;
+
     glm::mat4 _objectMatrix;
 
     CameraTransforms _cam;
@@ -42,9 +43,9 @@ public:
     void Scale(glm::vec3 scale);
     void SetObjectMatrix(glm::mat4 matrix);
 
-    glm::mat4 GetView();
-    glm::mat4 GetModel();
-    glm::mat4 GetProjection();
+    glm::mat4 GetTranslationMatrix();
+    glm::mat4 GetRotationMatrix();
+    glm::mat4 GetScaleMatrix();
     glm::mat4 GetObjectMatrix();
 
     void setCam(CameraTransforms cam);

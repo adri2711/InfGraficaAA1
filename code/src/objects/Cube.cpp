@@ -111,15 +111,15 @@ void Cube::draw()
 
 	glUniformMatrix4fv(
 		program->getUniform("objMat"),
-		1, GL_FALSE, glm::value_ptr(objMat)
+		1, GL_FALSE, glm::value_ptr(_objectMatrix)
 	);
 	glUniformMatrix4fv(
 		program->getUniform("mv_Mat"),
-		1, GL_FALSE, glm::value_ptr(cam._modelView)
+		1, GL_FALSE, glm::value_ptr(_cam._modelView)
 	);
 	glUniformMatrix4fv(
 		program->getUniform("mvpMat"),
-		1, GL_FALSE, glm::value_ptr(cam._MVP)
+		1, GL_FALSE, glm::value_ptr(_cam._MVP)
 	);
 	glUniform4f(
 		program->getUniform("color"),

@@ -9,7 +9,6 @@ Renderer::Renderer(int width, int height)
 	_cam._projection = glm::perspective(FOV, (float)width / (float)height, zNear, zFar);
 
 	glEnable(GL_DEPTH_TEST);
-
 }
 
 Renderer::~Renderer()
@@ -36,6 +35,10 @@ void Renderer::GUI()
 			panv[0] = panv[1] = panv[2] = 0.f;
 			rota[0] = rota[1] = 0.f;
 		}
+
+		ImGui::SliderFloat("X Position Light", &_lightPosition.x, MIN_X_POSITION_LIGHT, MAX_X_POSITION_LIGHT);
+		ImGui::SliderFloat("Y Position Light", &_lightPosition.y, MIN_Y_POSITION_LIGHT, MAX_Y_POSITION_LIGHT);
+		ImGui::SliderFloat("Z Position Light", &_lightPosition.z, MIN_Z_POSITION_LIGHT, MAX_Z_POSITION_LIGHT);
 
 		renderGUI();
 		/////////////////////////////////////////////////////////

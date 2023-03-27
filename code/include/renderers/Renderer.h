@@ -10,6 +10,15 @@
 
 #include "GL_framework.h"
 
+#define MIN_X_POSITION_LIGHT -5
+#define MAX_X_POSITION_LIGHT 5
+
+#define MIN_Y_POSITION_LIGHT -5
+#define MAX_Y_POSITION_LIGHT 5
+
+#define MIN_Z_POSITION_LIGHT -5 
+#define MAX_Z_POSITION_LIGHT 5
+
 struct CameraTransforms {
 	glm::mat4 _projection;
 	glm::mat4 _modelView;

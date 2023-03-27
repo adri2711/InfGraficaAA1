@@ -6,7 +6,7 @@ Object::Object(glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 sc
     Rotate(angle, rotation);
     Scale(scale);
     
-    _objectMatrix = _view * _model * _projection;
+    _objectMatrix = _translationMatrix * _rotationMatrix * _scaleMatrix;
 }
 
 Object::Object(glm::vec3 position, glm::vec3 scale)
@@ -14,7 +14,7 @@ Object::Object(glm::vec3 position, glm::vec3 scale)
     Move(position);
     Scale(scale);
 
-    _objectMatrix = _view * _projection;
+    _objectMatrix = _translationMatrix * _scaleMatrix;
     
 }
 
@@ -22,7 +22,7 @@ Object::Object(glm::vec3 position)
 {
     Move(position);
 
-    _objectMatrix = _view;
+    _objectMatrix = _translationMatrix;
 }
 
 Object::Object()
@@ -37,17 +37,17 @@ Object::~Object()
 
 void Object::Move(glm::vec3 position)
 {
-    _view = glm::translate(glm::mat4(), position);
+    _translationMatrix = glm::translate(glm::mat4(), position);
 }
 
 void Object::Rotate(float angle, glm::vec3 rotation)
 {
-    _model = glm::rotate(glm::mat4(), -glm::radians(float(angle)), rotation);
+    _rotationMatrix = glm::rotate(glm::mat4(), -glm::radians(float(angle)), rotation);
 }
 
 void Object::Scale(glm::vec3 scale)
 {
-    _projection = glm::scale(glm::mat4(), scale);
+    _scaleMatrix = glm::scale(glm::mat4(), scale);
 }
 
 void Object::SetObjectMatrix(glm::mat4 matrix)
@@ -55,19 +55,19 @@ void Object::SetObjectMatrix(glm::mat4 matrix)
     _objectMatrix = matrix;
 }
 
-glm::mat4 Object::GetView()
+glm::mat4 Object::GetTranslationMatrix()
 {
-    return _view;
+    return _translationMatrix;
 }
 
-glm::mat4 Object::GetModel()
+glm::mat4 Object::GetRotationMatrix()
 {
-    return _model;
+    return _rotationMatrix;
 }
 
-glm::mat4 Object::GetProjection()
+glm::mat4 Object::GetScaleMatrix()
 {
-    return _projection;
+    return _scaleMatrix;
 }
 
 glm::mat4 Object::GetObjectMatrix()

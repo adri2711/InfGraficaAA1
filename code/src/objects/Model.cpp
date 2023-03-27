@@ -1,5 +1,6 @@
 #pragma warning(disable: 4996)
 #include "objects/Model.h"
+#include "stb_image.h"
 
 Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation,
              glm::vec3 scale): Object(position, angle, rotation, scale)
@@ -44,6 +45,7 @@ void Model::InitModel(const char* modelPath, const char* shaderPath)
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 	glGenBuffers(2, VBO);
+	//glGenBuffers(1, &EBO);	
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
@@ -54,6 +56,12 @@ void Model::InitModel(const char* modelPath, const char* shaderPath)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), &normals[0], GL_STATIC_DRAW);
 	glVertexAttribPointer((GLuint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
+
+	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, );
+
+	int imageWidth, imageHeight, numberChannels;
+	unsigned char* data = stbi_load( "", &imageHeight, &imageHeight, &numberChannels, 0);*/
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
