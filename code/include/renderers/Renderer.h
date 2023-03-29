@@ -43,6 +43,9 @@
 #define MIN_SPECULAR_COEFFICIENT 0
 #define MAX_SPECULAR_COEFFICIENT 1
 
+#define MIN_SHININESS_COEFFICIENT 0
+#define MAX_SHININESS_COEFFICIENT 50
+
 struct CameraTransforms {
 	glm::mat4 _projection;
 	glm::mat4 _modelView;
