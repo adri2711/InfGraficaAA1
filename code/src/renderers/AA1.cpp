@@ -47,7 +47,7 @@ void AA1::RenderLightEmissor()
 {
 	_lightEmissor->Move(_lightPosition);
 	_lightEmissor->SetObjectMatrix(_lightEmissor->GetTranslationMatrix());
-	_lightEmissor->setColor(glm::vec4(0.9f, 0.1f, 0.1f, 1.0f));	
+	_lightEmissor->setColor(glm::vec4(_lightColor.r, _lightColor.g, _lightColor.b, _lightColor.a));	
 	_lightEmissor->setCam(_cam);
 	_lightEmissor->draw(glm::vec3(), glm::vec4(), 0, 0, 0,0);
 }

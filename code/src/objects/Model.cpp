@@ -168,6 +168,8 @@ void Model::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPow
 {
 	glBindVertexArray(VAO);
 	program->use();
+
+	float radiantEffect = radiantPower / (4.f * glm::pi<float>());
     
 	glUniformMatrix4fv(
 		program->getUniform("objectMatrix"),
@@ -190,8 +192,6 @@ void Model::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPow
 
 	glUniform3f(program->getUniform("_lightPosition"), lightPosition.x, lightPosition.y, lightPosition.z);
 
-	glUniform1f(program->getUniform("_radiantPower"), radiantPower);
-
 	glUniform1f(program->getUniform("_shininessCoefficient"), _shininessCoefficient);
 
 	glUniform1f(program->getUniform("_ambientReflectionCoefficient"), ambientReflectionCoefficient);
@@ -199,6 +199,8 @@ void Model::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPow
 	glUniform1f(program->getUniform("_diffuseReflectionCoefficient"), diffuseReflectionCoefficient);
 
 	glUniform1f(program->getUniform("_specularReflectionCoefficient"), specularReflectionCoefficient);
+
+	glUniform1f(program->getUniform("_radiantEffect"), radiantEffect);
 
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
