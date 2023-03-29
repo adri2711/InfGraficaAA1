@@ -23,6 +23,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/code/include/glm/gtc/matrix_transform.inl" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/code/include/imgui/imgui.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -74,6 +75,9 @@
       <workItem from="1679157674968" duration="1010000" />
       <workItem from="1679158707172" duration="17079000" />
       <workItem from="1679222557780" duration="6282000" />
+      <workItem from="1679609798078" duration="27000" />
+      <workItem from="1679609848062" duration="167000" />
+      <workItem from="1680079040727" duration="9440000" />
     </task>
     <servers />
   </component>

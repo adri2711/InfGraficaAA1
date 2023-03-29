@@ -104,7 +104,7 @@ Cube::~Cube()
 	delete program;
 }
 
-void Cube::draw()
+void Cube::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient)
 {
 	glBindVertexArray(VAO);
 	program->use();

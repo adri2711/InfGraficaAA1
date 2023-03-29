@@ -18,13 +18,15 @@ public:
 	std::vector< glm::vec3 > GetVertices();
 	std::vector< glm::vec2 > GetUvs();
 	std::vector< glm::vec3 > GetNormals();
-	void draw() override;
+	void draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient) override;
 	
 private:
 
 	/*GLuint EBO;
 	GLuint texture;*/
 
+	float _shininessCoefficient;
+	
 	bool loadOBJ(const char* path, std::vector < glm::vec3 >& out_vertices, std::vector < glm::vec2 >& out_uvs, std::vector < glm::vec3 >& out_normals);
 
 	const int numVerts = 24 + 6; // 4 vertex/face * 6 faces + 6 PRIMITIVE RESTART

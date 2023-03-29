@@ -19,6 +19,30 @@
 #define MIN_Z_POSITION_LIGHT -5 
 #define MAX_Z_POSITION_LIGHT 5
 
+#define MIN_RADIANT_POWER 0
+#define MAX_RADIANT_POWER 50
+
+#define MIN_RED_COLOR 0
+#define MAX_RED_COLOR 1
+
+#define MIN_GREEN_COLOR 0
+#define MAX_GREEN_COLOR 1
+
+#define MIN_BLUE_COLOR 0
+#define MAX_BLUE_COLOR 1
+
+#define MIN_ALPHA_COLOR 0
+#define MAX_ALPHA_COLOR 1
+
+#define MIN_AMBIENT_COEFFICIENT 0
+#define MAX_AMBIENT_COEFFICIENT 1
+
+#define MIN_DIFFUSE_COEFFICIENT 0
+#define MAX_DIFFUSE_COEFFICIENT 1
+
+#define MIN_SPECULAR_COEFFICIENT 0
+#define MAX_SPECULAR_COEFFICIENT 1
+
 struct CameraTransforms {
 	glm::mat4 _projection;
 	glm::mat4 _modelView;
@@ -45,6 +69,11 @@ protected:
 	glm::vec3 _lightPosition;
 	glm::vec4 _lightColor;
 	float _radiantPower;
+
+	float _ambientReflectionCoefficient;
+	float _diffuseReflectionCoefficient;
+	float _specularReflectionCoefficient;
+	float _shininessCoefficient;
 
 	CameraTransforms _cam;
 

@@ -50,12 +50,10 @@ PointLight::~PointLight()
 }
 
 
-void PointLight::draw()
+void PointLight::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient)
 {
     glBindVertexArray(VAO);
     program->use();
-    
-    glUniform1f(program->getUniform("radiantPower"), _radiantPower);
     
     glUniformMatrix4fv(
         program->getUniform("objectMatrix"),
