@@ -164,7 +164,7 @@ std::vector<glm::vec2> Model::GetUvs()
 	return uvs;
 }
 
-void Model::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient)
+void Model::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
 {
 	glBindVertexArray(VAO);
 	program->use();
@@ -192,7 +192,7 @@ void Model::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPow
 
 	glUniform3f(program->getUniform("_lightPosition"), lightPosition.x, lightPosition.y, lightPosition.z);
 
-	glUniform1f(program->getUniform("_shininessCoefficient"), _shininessCoefficient);
+	glUniform1f(program->getUniform("_shininessCoefficient"), shininessCoefficient);
 
 	glUniform1f(program->getUniform("_ambientReflectionCoefficient"), ambientReflectionCoefficient);
 

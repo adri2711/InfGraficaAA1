@@ -36,23 +36,6 @@ void Renderer::GUI()
 			rota[0] = rota[1] = 0.f;
 		}
 
-		ImGui::SliderFloat("X Position Light", &_lightPosition.x, MIN_X_POSITION_LIGHT, MAX_X_POSITION_LIGHT);
-		ImGui::SliderFloat("Y Position Light", &_lightPosition.y, MIN_Y_POSITION_LIGHT, MAX_Y_POSITION_LIGHT);
-		ImGui::SliderFloat("Z Position Light", &_lightPosition.z, MIN_Z_POSITION_LIGHT, MAX_Z_POSITION_LIGHT);
-		
-		ImGui::SliderFloat("Radiant Power", &_radiantPower, MIN_RADIANT_POWER, MAX_RADIANT_POWER);
-
-		ImGui::SliderFloat("Color Red", &_lightColor.r, MIN_RED_COLOR, MAX_RED_COLOR);
-		ImGui::SliderFloat("Color Green", &_lightColor.g, MIN_GREEN_COLOR, MAX_GREEN_COLOR);
-		ImGui::SliderFloat("Color Blue", &_lightColor.b, MIN_BLUE_COLOR, MAX_BLUE_COLOR);
-		ImGui::SliderFloat("Color Alpha", &_lightColor.w, MIN_ALPHA_COLOR, MAX_ALPHA_COLOR);
-
-		ImGui::SliderFloat("Ambient Coefficient", &_ambientReflectionCoefficient, MIN_AMBIENT_COEFFICIENT, MAX_AMBIENT_COEFFICIENT);
-		ImGui::SliderFloat("Diffuse Coefficient", &_diffuseReflectionCoefficient, MIN_DIFFUSE_COEFFICIENT, MAX_DIFFUSE_COEFFICIENT);
-		ImGui::SliderFloat("Specular Coefficient", &_specularReflectionCoefficient, MIN_SPECULAR_COEFFICIENT, MAX_SPECULAR_COEFFICIENT);
-
-		ImGui::SliderFloat("Shininess Coefficient", &_shininessCoefficient, MIN_SHININESS_COEFFICIENT, MAX_SHININESS_COEFFICIENT);
-
 		renderGUI();
 		/////////////////////////////////////////////////////////
 	}

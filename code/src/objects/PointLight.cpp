@@ -50,7 +50,7 @@ PointLight::~PointLight()
 }
 
 
-void PointLight::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient)
+void PointLight::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
 {
     glBindVertexArray(VAO);
     program->use();
