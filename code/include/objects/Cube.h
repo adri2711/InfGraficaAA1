@@ -7,7 +7,7 @@
 class Cube
 {
 public:
-	Cube();
+	Cube(float x = 1, float y = 1, float z = 1);
 	~Cube();
 	void setTransforms(glm::mat4 objMat, CameraTransforms cam);
 	void setColor(glm::vec4 color);

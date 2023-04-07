@@ -32,6 +32,8 @@ protected:
 	float FOV = glm::radians(65.f);
 	float zNear = 1.f;
 	float zFar = 50.f;
+	int width;
+	int height;
 
 	CameraTransforms cam;
 

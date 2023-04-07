@@ -1,6 +1,6 @@
 #include <objects/Cube.h>
 
-Cube::Cube()
+Cube::Cube(float x, float y, float z)
 {
 	// Define vertexs, norms and indexs
 	const float halfW = 0.5f;
@@ -14,15 +14,16 @@ Cube::Cube()
 	//|/        |/
 	//1---------2
 
+	glm::vec3 size = glm::vec3(x, y, z);
 	glm::vec3 verts[] = {
-		glm::vec3(-halfW, -halfW, -halfW),
-		glm::vec3(-halfW, -halfW,  halfW),
-		glm::vec3(halfW, -halfW,  halfW),
-		glm::vec3(halfW, -halfW, -halfW),
-		glm::vec3(-halfW,  halfW, -halfW),
-		glm::vec3(-halfW,  halfW,  halfW),
-		glm::vec3(halfW,  halfW,  halfW),
-		glm::vec3(halfW,  halfW, -halfW)
+		glm::vec3(-halfW, -halfW, -halfW) * size,
+		glm::vec3(-halfW, -halfW,  halfW) * size,
+		glm::vec3(halfW, -halfW,  halfW) * size,
+		glm::vec3(halfW, -halfW, -halfW) * size,
+		glm::vec3(-halfW,  halfW, -halfW) * size,
+		glm::vec3(-halfW,  halfW,  halfW) * size,
+		glm::vec3(halfW,  halfW,  halfW) * size,
+		glm::vec3(halfW,  halfW, -halfW) * size
 	};
 	glm::vec3 norms[] = {
 		glm::vec3(0.f, -1.f,  0.f),

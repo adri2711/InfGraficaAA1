@@ -10,6 +10,8 @@ Renderer::Renderer(int width, int height)
 
 	glEnable(GL_DEPTH_TEST);
 
+	this->height = height;
+	this->width = width;
 }
 
 Renderer::~Renderer()
