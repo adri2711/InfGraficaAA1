@@ -316,8 +316,6 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
     <Content Include="shaders\Cube.vert" />
     <Content Include="shaders\Model.frag" />
     <Content Include="shaders\Model.vert" />
-    <Content Include="shaders\PointLight.frag" />
-    <Content Include="shaders\PointLight.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

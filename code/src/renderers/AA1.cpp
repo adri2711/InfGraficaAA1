@@ -7,8 +7,7 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 	_radiantPower = 20.f;
 	_shininessCoefficient = 5.f;
 	catModel = new Model("resources/a_man.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), glm::vec3(1.f, 1.f, 1.f));
-	//_auxCube = new Cube("shaders/Cube", glm::vec3(0.0f, -1.3f, -3.0f), glm::vec3(1.f, 1.f, 1.f));
-	_pointLight = new PointLight("shaders/PointLight", glm::vec3(1.f,1.f,1.f),20, _lightPosition);
+	_pointLight = new PointLight(20, _lightPosition);
 	_lightEmissor = new Cube("shaders/Cube", _lightPosition, glm::vec3(1.f, 1.f, 1.f));
 }
 
@@ -35,19 +34,12 @@ void AA1::RenderCat(float elapsedTime)
 	catModel->setColor(glm::vec4(0.5f, 0.5f, 1.f, 1.f));
 	catModel->setCam(_cam);
 	catModel->draw(_lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
-	/*_auxCube->Rotate((int)(elapsedTime * speed) % 360, glm::vec3(0.0f, 1.0f, 0.0f));
-	_auxCube->SetObjectMatrix(_auxCube->GetTranslationMatrix());
-	_auxCube->setColor(glm::vec4(0.5f, 0.5f, 1.f, 1.f));
-	_auxCube->setCam(_cam);
-	_auxCube->draw(_lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);*/
 }
 
 void AA1::RenderPointLight()
 {
 	_pointLight->Move(_lightPosition);
 	_pointLight->SetObjectMatrix(_pointLight->GetTranslationMatrix());
-	_pointLight->setCam(_cam);
-	_pointLight->draw(glm::vec3(), glm::vec4(), 0, 0, 0, 0, 0);
 }
 
 void AA1::RenderLightEmissor()

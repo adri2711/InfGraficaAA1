@@ -75,7 +75,7 @@ Model::~Model()
 	delete program;
 }
 
-bool Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std::vector<glm::vec2>& out_uvs, std::vector<glm::vec3>& out_normals)
+void Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std::vector<glm::vec2>& out_uvs, std::vector<glm::vec3>& out_normals)
 {	
 	std::vector< unsigned int > vertexIndices, uvIndices, normalIndices;
 	std::vector< glm::vec3 > temp_vertices;
@@ -84,7 +84,7 @@ bool Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std:
 	FILE* file = fopen(path, "r");
 	if (file == NULL) {
 		printf("Impossible to open the file !\n");
-		return false;
+		return;
 	}
 
 	while (1) {
@@ -117,7 +117,7 @@ bool Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std:
 			int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
 			if (matches != 9) {
 				printf("File can't be read by our simple parser : ( Try exporting with other options\n");
-				return false;
+				return;
 			}
 			vertexIndices.push_back(vertexIndex[0]);
 			vertexIndices.push_back(vertexIndex[1]);
@@ -146,7 +146,7 @@ bool Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std:
 		glm::vec2 uv = temp_uvs[uvIndex - 1];
 		out_uvs.push_back(uv);
 	}
-	return true;
+	fclose(file);
 }
 
 std::vector< glm::vec3 > Model::GetVertices()
