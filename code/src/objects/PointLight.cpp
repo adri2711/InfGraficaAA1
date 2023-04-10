@@ -23,7 +23,7 @@ float PointLight::GetRadiantPower()
 
 
 
-void PointLight::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void PointLight::draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
 {
     glBindVertexArray(VAO);
     program->use();
@@ -40,9 +40,9 @@ void PointLight::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radia
         program->getUniform("mvpMatrix"),
         1, GL_FALSE, glm::value_ptr(_cam._MVP)
     );
-    glUniform4f(
+    glUniform3f(
         program->getUniform("color"),
-        color.r, color.g, color.b, color.w
+        color.r, color.g, color.b
     );
 
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());

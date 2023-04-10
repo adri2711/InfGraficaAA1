@@ -9,9 +9,10 @@
 class Cube : public Object
 {
 public:
-	Cube(const char* shaderPath, glm::vec3 position, glm::vec3 scale);
+	Cube(const char* shaderPath, glm::vec3 position, glm::vec3 scale, float x = 1.f, float y = 1.f, float z = 1.f);
 	~Cube();
-	void draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
+	void SetTransforms(glm::mat4 objectMatrix, CameraTransforms cam);
+	void draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
 	
 private:
 

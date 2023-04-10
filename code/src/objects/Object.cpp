@@ -80,7 +80,7 @@ void Object::setCam(CameraTransforms cam)
     this->_cam = cam;
 }
 
-void Object::setColor(glm::vec4 color)
+void Object::setColor(glm::vec3 color)
 {
     this->color = color;
 }
