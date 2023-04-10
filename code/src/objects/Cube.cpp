@@ -1,9 +1,11 @@
 #include <objects/Cube.h>
 
-Cube::Cube(const char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
+Cube::Cube(const char* shaderPath, glm::vec3 position, glm::vec3 scale, float x, float y, float z): Object(position, scale)
 {
 	// Define vertexs, norms and indexs
 	const float halfW = 0.5f;
+
+	glm::vec3 size(x, y, z);
 
 	//   4---------7
 	//  /|        /|
@@ -14,7 +16,6 @@ Cube::Cube(const char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(
 	//|/        |/
 	//1---------2
 
-	glm::vec3 size = glm::vec3(x, y, z);
 	glm::vec3 verts[] = {
 		glm::vec3(-halfW, -halfW, -halfW) * size,
 		glm::vec3(-halfW, -halfW,  halfW) * size,
@@ -105,7 +106,14 @@ Cube::~Cube()
 	delete program;
 }
 
-void Cube::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Cube::SetTransforms(glm::mat4 objectMatrix, CameraTransforms cam)
+{
+	this->_objectMatrix = objectMatrix;
+	this->_cam = cam;
+}
+
+
+void Cube::draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
 {
 	glBindVertexArray(VAO);
 	program->use();
@@ -122,9 +130,9 @@ void Cube::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPowe
 		program->getUniform("mvpMat"),
 		1, GL_FALSE, glm::value_ptr(_cam._MVP)
 	);
-	glUniform4f(
+	glUniform3f(
 		program->getUniform("color"),
-		color.r, color.g, color.b, color.w
+		color.r, color.g, color.b
 	);
 
 	glDrawElements(GL_TRIANGLE_STRIP, numVerts, GL_UNSIGNED_BYTE, 0);

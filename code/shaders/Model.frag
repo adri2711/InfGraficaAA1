@@ -5,11 +5,11 @@ in vec3 FragPos;
 out vec4 out_Color;
 
 uniform mat4 mv_Mat;
-uniform vec4 color;
+uniform vec3 color;
 uniform mat4 objectMatrix;
 
 uniform vec3 _lightPosition;
-uniform vec4 _lightColor;
+uniform vec3 _lightColor;
 
 uniform float _radiantEffect;
 
@@ -32,15 +32,13 @@ void main() {
 	
 	vec3 cameraVector = normalize(vec3(0.f, 0.f, 0.f) - coordinate);
 	
-	//vec4 cameraVector = normalize(vec4(0.f, 0.f, 0.f, 0.f) - (mv_Mat * vec4(coordinate, 0.0f)));	
-	
-	vec4 ambientReflection = _ambientReflectionCoefficient * _lightColor;
+	vec3 ambientReflection = _ambientReflectionCoefficient * _lightColor;
 
-	vec4 diffuseReflection = _diffuseReflectionCoefficient * dot(normal, lightVector) * _lightColor;	
+	vec3 diffuseReflection = _diffuseReflectionCoefficient * dot(normal, lightVector) * _lightColor;	
 	
-	vec4 specularReflection = _specularReflectionCoefficient * pow(max(0.001f, dot(vec3(cameraVector), lightVectorMirror)), _shininessCoefficient) * _lightColor;
+	vec3 specularReflection = _specularReflectionCoefficient * pow(max(0.001f, dot(vec3(cameraVector), lightVectorMirror)), _shininessCoefficient) * _lightColor;
 	
-	vec4 lightResult = ambientReflection + (diffuseReflection + specularReflection) * radiance;
+	vec3 lightResult = ambientReflection + (diffuseReflection + specularReflection) * radiance;
 	
-	out_Color =  lightResult * color;
+	out_Color =  vec4(lightResult, 1.0f) * vec4(color, 1.0f);
 }

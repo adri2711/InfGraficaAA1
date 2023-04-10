@@ -18,7 +18,7 @@ public:
 	std::vector< glm::vec3 > GetVertices();
 	std::vector< glm::vec2 > GetUvs();
 	std::vector< glm::vec3 > GetNormals();
-	void draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
+	void draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
 	
 private:
 

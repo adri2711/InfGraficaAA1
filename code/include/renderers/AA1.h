@@ -23,8 +23,8 @@
 #define MIN_Z_POSITION_LIGHT -5 
 #define MAX_Z_POSITION_LIGHT 5
 
-#define MIN_RADIANT_POWER 0
-#define MAX_RADIANT_POWER 50
+#define MIN_RADIANT_POWER 1
+#define MAX_RADIANT_POWER 250
 
 #define MIN_RED_COLOR 0
 #define MAX_RED_COLOR 1
@@ -47,8 +47,8 @@
 #define MIN_SPECULAR_COEFFICIENT 0
 #define MAX_SPECULAR_COEFFICIENT 1
 
-#define MIN_SHININESS_COEFFICIENT 0
-#define MAX_SHININESS_COEFFICIENT 500
+#define MIN_SHININESS_COEFFICIENT 1
+#define MAX_SHININESS_COEFFICIENT 64
 
 class AA1 : public Renderer
 {
@@ -64,8 +64,10 @@ private:
     Cube* _lightEmissor;
     Cube* _auxCube;
 
+    glm::vec3 _globalPosition;
+    
     glm::vec3 _lightPosition;
-    glm::vec4 _lightColor;
+    glm::vec3 _lightColor;
     float _radiantPower;
 
     float _ambientReflectionCoefficient;
@@ -90,8 +92,10 @@ public:
     
 protected:
     void render(float dt);
+    void CalculateDollyEffect(float dt);
     void RenderCat(float elapsedTime);
     void RenderPointLight();
     void RenderLightEmissor();
+    void RenderScenario();
     void renderGUI() override;
 };
