@@ -35,7 +35,7 @@ protected:
 	int width;
 	int height;
 
-	CameraTransforms cam;
+	CameraTransforms _cam;
 
 	struct prevMouse {
 		float lastx, lasty;

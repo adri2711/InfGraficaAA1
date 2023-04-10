@@ -1,33 +1,31 @@
 #pragma once
 #include <vector>
-#include <string>
 #include "glm//glm.hpp"
-#include <GL/glew.h>
 #include <glm\gtc\type_ptr.hpp>
-#include <Program.h>
-#include <renderers/Renderer.h>
-class Model
+
+#include "Object.h"
+
+class Model : public Object
 {
 public:
-	Model(const char* path);
+	Model(const char* modelPath, const char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
+	Model(const char* modelPath, const char* shaderPath, glm::vec3 position, glm::vec3 scale);
+	Model(const char* modelPath, const char* shaderPath, glm::vec3 position);
+	Model(const char* modelPath, const char* shaderPath);
+	void InitModel(const char* modelPath, const char* shaderPath);
 	~Model();
-	bool loadOBJ(const char* path);
-	void setTransforms(glm::mat4 objMat, CameraTransforms cam);
-	void setColor(glm::vec4 color);
-	void draw();
+
+	std::vector< glm::vec3 > GetVertices();
+	std::vector< glm::vec2 > GetUvs();
+	std::vector< glm::vec3 > GetNormals();
+	void draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
+	
 private:
-	bool loadOBJ(const char* path, std::vector < glm::vec3 >& out_vertices, std::vector < glm::vec2 >& out_uvs, std::vector < glm::vec3 >& out_normals);
-	GLuint VAO;
-	GLuint VBO[3];
-	Program* program;
 
-	glm::mat4 objMat;
-	CameraTransforms cam;
-	glm::vec4 color;
-
-	std::vector< glm::vec3 > vertices;
-	std::vector< glm::vec2 > uvs;
-	std::vector< glm::vec3 > normals; // Won't be used at the moment.
+	/*GLuint EBO;
+	GLuint texture;*/
+	
+	void loadOBJ(const char* path, std::vector < glm::vec3 >& out_vertices, std::vector < glm::vec2 >& out_uvs, std::vector < glm::vec3 >& out_normals);
 
 	const int numVerts = 24 + 6; // 4 vertex/face * 6 faces + 6 PRIMITIVE RESTART
 };

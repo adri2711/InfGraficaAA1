@@ -1,6 +1,6 @@
 #include <objects/Cube.h>
 
-Cube::Cube(float x, float y, float z)
+Cube::Cube(const char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
 {
 	// Define vertexs, norms and indexs
 	const float halfW = 0.5f;
@@ -26,12 +26,12 @@ Cube::Cube(float x, float y, float z)
 		glm::vec3(halfW,  halfW, -halfW) * size
 	};
 	glm::vec3 norms[] = {
-		glm::vec3(0.f, -1.f,  0.f),
-		glm::vec3(0.f,  1.f,  0.f),
-		glm::vec3(-1.f,  0.f,  0.f),
-		glm::vec3(1.f,  0.f,  0.f),
-		glm::vec3(0.f,  0.f, -1.f),
-		glm::vec3(0.f,  0.f,  1.f)
+		glm::vec3(0.f, -1.f, 0.f),
+		glm::vec3(0.f, 1.f, 0.f),
+		glm::vec3(-1.f, 0.f, 0.f),
+		glm::vec3(1.f, 0.f, 0.f),
+		glm::vec3(0.f, 0.f, -1.f),
+		glm::vec3(0.f, 0.f, 1.f)
 	};
 
 	glm::vec3 cubeVerts[] = {
@@ -81,11 +81,14 @@ Cube::Cube(float x, float y, float z)
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	
+	std::string vertexPath = std::string(shaderPath).append(".vert");
+	std::string fragmentPath = std::string(shaderPath).append(".frag");
+	
 	// Initialize program
 	program = new Program("Cube");
-	program->compileAndAttachShader("shaders/Cube.vert", GL_VERTEX_SHADER, "vertex");
-	program->compileAndAttachShader("shaders/Cube.frag", GL_FRAGMENT_SHADER, "fragment");
+	program->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
+	program->compileAndAttachShader(fragmentPath.c_str(), GL_FRAGMENT_SHADER, "fragment");
 
 	// Bind Attrib locations
 	program->bindAttribLocation(0, "in_Position");
@@ -102,33 +105,22 @@ Cube::~Cube()
 	delete program;
 }
 
-void Cube::setTransforms(glm::mat4 objMat, CameraTransforms cam)
-{
-	this->objMat = objMat;
-	this->cam = cam;
-}
-
-void Cube::setColor(glm::vec4 color)
-{
-	this->color = color;
-}
-
-void Cube::draw()
+void Cube::draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
 {
 	glBindVertexArray(VAO);
 	program->use();
 
 	glUniformMatrix4fv(
 		program->getUniform("objMat"),
-		1, GL_FALSE, glm::value_ptr(objMat)
+		1, GL_FALSE, glm::value_ptr(_objectMatrix)
 	);
 	glUniformMatrix4fv(
 		program->getUniform("mv_Mat"),
-		1, GL_FALSE, glm::value_ptr(cam._modelView)
+		1, GL_FALSE, glm::value_ptr(_cam._modelView)
 	);
 	glUniformMatrix4fv(
 		program->getUniform("mvpMat"),
-		1, GL_FALSE, glm::value_ptr(cam._MVP)
+		1, GL_FALSE, glm::value_ptr(_cam._MVP)
 	);
 	glUniform4f(
 		program->getUniform("color"),

@@ -4,22 +4,16 @@
 #include <Program.h>
 #include <renderers/Renderer.h>
 
-class Cube
+#include "Object.h"
+
+class Cube : public Object
 {
 public:
-	Cube(float x = 1, float y = 1, float z = 1);
+	Cube(const char* shaderPath, glm::vec3 position, glm::vec3 scale);
 	~Cube();
-	void setTransforms(glm::mat4 objMat, CameraTransforms cam);
-	void setColor(glm::vec4 color);
-	void draw();
+	void draw(glm::vec3 lightPosition, glm::vec4 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
+	
 private:
-	GLuint VAO;
-	GLuint VBO[3];
-	Program* program;
-
-	glm::mat4 objMat;
-	CameraTransforms cam;
-	glm::vec4 color;
 
 	const int numVerts = 24 + 6; // 4 vertex/face * 6 faces + 6 PRIMITIVE RESTART
 };
