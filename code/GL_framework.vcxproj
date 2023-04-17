@@ -310,6 +310,9 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
+    <None Include="shaders\Normal.frag" />
+    <None Include="shaders\Normal.geom" />
+    <None Include="shaders\Normal.vert" />
     <None Include="shaders\triangle.frag" />
     <None Include="shaders\triangle.vert" />
   </ItemGroup>

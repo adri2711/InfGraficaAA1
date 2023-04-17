@@ -41,6 +41,22 @@ void Model::InitModel(const char* modelPath, const char* shaderPath)
 	// Link program
 	program->link();
 
+
+	programNormal = new Program("Normal");
+
+	vertexPath = std::string("shaders/Normal").append(".vert");
+	std::string geometryPath = std::string("shaders/Normal").append(".geom");
+	fragmentPath = std::string("shaders/Normal").append(".frag");
+
+	programNormal->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
+	programNormal->compileAndAttachShader(geometryPath.c_str(), GL_GEOMETRY_SHADER, "geometry");
+	programNormal->compileAndAttachShader(fragmentPath.c_str(), GL_FRAGMENT_SHADER, "fragment");
+
+	programNormal->bindAttribLocation(0, "in_Position");
+	programNormal->bindAttribLocation(1, "in_Normal");
+
+	programNormal->link();
+
 	// Initialize buffers
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -205,5 +221,21 @@ void Model::draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPow
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
 	program->unuse();
+
+	programNormal->use();
+
+	glUniformMatrix4fv(
+		programNormal->getUniform("objectMatrix"),
+		1, GL_FALSE, glm::value_ptr(_objectMatrix)
+	);
+	glUniformMatrix4fv(
+		programNormal->getUniform("mvpMatrix"),
+		1, GL_FALSE, glm::value_ptr(_cam._MVP)
+	);
+
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
+	programNormal->unuse();
+
 	glBindVertexArray(0);
 }

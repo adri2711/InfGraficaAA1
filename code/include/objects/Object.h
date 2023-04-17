@@ -25,6 +25,7 @@ protected:
     GLuint VAO;
     GLuint VBO[3];
     Program* program;
+    Program* programNormal;
 
     std::vector< glm::vec3 > vertices;
     std::vector< glm::vec2 > uvs;
