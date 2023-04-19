@@ -1,5 +1,5 @@
 #pragma once
-#include "objects/Model.h"
+#include "objects/ModelExploding.h"
 #include "objects/PointLight.h"
 #include "objects/Cube.h"
 #include "objects/Cube.h"

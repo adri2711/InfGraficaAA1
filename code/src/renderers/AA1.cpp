@@ -5,7 +5,7 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 	//fovMin = FOV;
 	//fovMax = glm::radians(120.f);
 	_lightPosition = glm::vec3(0.0f, 2.3f, -3.0f);
-	catModel = new Model("resources/a_man.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), glm::vec3(1.f, 1.f, 1.f));
+	catModel = new ModelExploding("resources/a_man.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
 	_pointLight = new PointLight(20, _lightPosition);
 	_lightEmissor = new Cube("shaders/Cube", _lightPosition, glm::vec3(1.f, 1.f, 1.f));
 	floor = new Cube("shaders/Cube", _lightPosition, glm::vec3(15.f, 1.f, 15.f), 15.f, 1.f, 15.f);
