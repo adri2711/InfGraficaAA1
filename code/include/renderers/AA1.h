@@ -1,5 +1,5 @@
 #pragma once
-#include "objects/Model.h"
+#include "objects/ModelExploding.h"
 #include "objects/PointLight.h"
 #include "objects/Cube.h"
 #include "objects/Cube.h"
@@ -57,7 +57,7 @@ private:
     GLuint VAO;
     GLuint VBO;
 
-    Model* catModel;
+    ModelExploding* catModel;
     
     PointLight* _pointLight;
 
@@ -86,6 +86,8 @@ private:
     float fovMax;
     float dollyMovement = 3.75f;
 
+    bool explode = false;
+
 public:
     AA1(int width, int height);
     ~AA1();
@@ -94,8 +96,8 @@ protected:
     void render(float dt);
     void CalculateDollyEffect(float dt);
     void RenderCat(float elapsedTime);
-    void RenderPointLight();
-    void RenderLightEmissor();
-    void RenderScenario();
+    void RenderPointLight(float dt);
+    void RenderLightEmissor(float dt);
+    void RenderScenario(float dt);
     void renderGUI() override;
 };

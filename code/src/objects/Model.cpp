@@ -2,66 +2,42 @@
 #include "objects/Model.h"
 #include "stb_image.h"
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation,
+Model::Model(char* modelPath, char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation,
              glm::vec3 scale): Object(position, angle, rotation, scale)
 {
-	InitModel(modelPath, shaderPath);
+	this->modelPath = modelPath;
+	this->shaderPath = shaderPath;
 }
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
+Model::Model(char* modelPath, char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
 {
-	InitModel(modelPath, shaderPath);
+	this->modelPath = modelPath;
+	this->shaderPath = shaderPath;
 }
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position): Object(position)
+Model::Model(char* modelPath, char* shaderPath, glm::vec3 position): Object(position)
 {
-	InitModel(modelPath, shaderPath);
+	this->modelPath = modelPath;
+	this->shaderPath = shaderPath;
 }
 
-Model::Model(const char* modelPath, const char* shaderPath): Object()
+Model::Model(char* modelPath, char* shaderPath): Object()
 {
-	InitModel(modelPath, shaderPath);
+	this->modelPath = modelPath;
+	this->shaderPath = shaderPath;
 }
 
-void Model::InitModel(const char* modelPath, const char* shaderPath)
+void Model::InitModel()
 {
-	std::string vertexPath = std::string(shaderPath).append(".vert");
-	std::string fragmentPath = std::string(shaderPath).append(".frag");
-
 	loadOBJ(modelPath, vertices, uvs, normals);
-	// Initialize program
-	program = new Program("Model");
-	program->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
-	program->compileAndAttachShader(fragmentPath.c_str(), GL_FRAGMENT_SHADER, "fragment");
 
-	// Bind Attrib locations
-	program->bindAttribLocation(0, "in_Position");
-	program->bindAttribLocation(1, "in_Normal");
-
-	// Link program
+	SetupProgram(shaderPath);
 	program->link();
 
-	// Initialize buffers
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glGenBuffers(2, VBO);
-	//glGenBuffers(1, &EBO);	
+	SetupProgramNormal(shaderPath);
+	programNormal->link();
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
-	glVertexAttribPointer((GLuint)0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), &normals[0], GL_STATIC_DRAW);
-	glVertexAttribPointer((GLuint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(1);
-
-	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, );
-
-	int imageWidth, imageHeight, numberChannels;
-	unsigned char* data = stbi_load( "", &imageHeight, &imageHeight, &numberChannels, 0);*/
+	SetupBuffers();
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -159,18 +135,66 @@ std::vector<glm::vec3> Model::GetNormals()
 	return normals;
 }
 
-std::vector<glm::vec2> Model::GetUvs()
+void Model::SetupProgram(std::string shaderPath)
 {
-	return uvs;
+	std::string vertexPath = std::string(shaderPath).append(".vert");
+	std::string fragmentPath = std::string(shaderPath).append(".frag");
+
+	// Initialize program
+	program = new Program("Model");
+	program->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
+	program->compileAndAttachShader(fragmentPath.c_str(), GL_FRAGMENT_SHADER, "fragment");
+
+	// Bind Attrib locations
+	program->bindAttribLocation(0, "in_Position");
+	program->bindAttribLocation(1, "in_Normal");
 }
 
-void Model::draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Model::SetupProgramNormal(std::string shaderPath)
 {
-	glBindVertexArray(VAO);
-	program->use();
+	programNormal = new Program("Normal");
 
+	std::string vertexPath = std::string("shaders/Normal").append(".vert");
+	std::string geometryPath = std::string("shaders/Normal").append(".geom");
+	std::string fragmentPath = std::string("shaders/Normal").append(".frag");
+
+	programNormal->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
+	programNormal->compileAndAttachShader(geometryPath.c_str(), GL_GEOMETRY_SHADER, "geometry");
+	programNormal->compileAndAttachShader(fragmentPath.c_str(), GL_FRAGMENT_SHADER, "fragment");
+
+	programNormal->bindAttribLocation(0, "in_Position");
+	programNormal->bindAttribLocation(1, "in_Normal");
+}
+
+void Model::SetupBuffers()
+{
+	// Initialize buffers
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	glGenBuffers(2, VBO);
+	//glGenBuffers(1, &EBO);	
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+	glVertexAttribPointer((GLuint)0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), &normals[0], GL_STATIC_DRAW);
+	glVertexAttribPointer((GLuint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(1);
+
+	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, );
+
+	int imageWidth, imageHeight, numberChannels;
+	unsigned char* data = stbi_load( "", &imageHeight, &imageHeight, &numberChannels, 0);*/
+}
+
+void Model::SetupUniformsModel(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+{
 	float radiantEffect = radiantPower / (4.f * glm::pi<float>());
-    
+
 	glUniformMatrix4fv(
 		program->getUniform("objectMatrix"),
 		1, GL_FALSE, glm::value_ptr(_objectMatrix)
@@ -201,9 +225,48 @@ void Model::draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPow
 	glUniform1f(program->getUniform("_specularReflectionCoefficient"), specularReflectionCoefficient);
 
 	glUniform1f(program->getUniform("_radiantEffect"), radiantEffect);
+}
 
+void Model::DrawModel(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+{
+	program->use();
+	SetupUniformsModel(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-
 	program->unuse();
+}
+
+void Model::SetupUniformsNormals()
+{
+	glUniformMatrix4fv(
+		programNormal->getUniform("objectMatrix"),
+		1, GL_FALSE, glm::value_ptr(_objectMatrix)
+	);
+	glUniformMatrix4fv(
+		programNormal->getUniform("mvpMatrix"),
+		1, GL_FALSE, glm::value_ptr(_cam._MVP)
+	);
+}
+
+void Model::DrawNormals()
+{
+	programNormal->use();
+	SetupUniformsNormals();
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	programNormal->unuse();
+}
+
+std::vector<glm::vec2> Model::GetUvs()
+{
+	return uvs;
+}
+
+void Model::draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+{
+	this->dt = dt;
+
+	glBindVertexArray(VAO);
+
+	DrawModel(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
+
 	glBindVertexArray(0);
 }
