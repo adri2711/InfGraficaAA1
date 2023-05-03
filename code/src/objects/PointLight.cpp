@@ -23,7 +23,7 @@ float PointLight::GetRadiantPower()
 
 
 
-void PointLight::draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void PointLight::draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
 {
     glBindVertexArray(VAO);
     program->use();

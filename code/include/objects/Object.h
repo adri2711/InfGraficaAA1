@@ -51,5 +51,5 @@ public:
 
     void setCam(CameraTransforms cam);
     void setColor(glm::vec3 color);
-    virtual void draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) = 0;
+    virtual void draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) = 0;
 };

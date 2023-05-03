@@ -2,6 +2,7 @@
 #include <vector>
 #include "glm//glm.hpp"
 #include <glm\gtc\type_ptr.hpp>
+#include <iostream>
 
 #include "Object.h"
 
@@ -10,18 +11,21 @@ class Model : public Object
 public:
 
 	glm::vec3 color;
+	char* modelPath;
+	char* shaderPath;
+	float dt;
 
-	Model(const char* modelPath, const char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
-	Model(const char* modelPath, const char* shaderPath, glm::vec3 position, glm::vec3 scale);
-	Model(const char* modelPath, const char* shaderPath, glm::vec3 position);
-	Model(const char* modelPath, const char* shaderPath);
-	virtual void InitModel(const char* modelPath, const char* shaderPath);
+	Model(char* modelPath, char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
+	Model(char* modelPath, char* shaderPath, glm::vec3 position, glm::vec3 scale);
+	Model(char* modelPath, char* shaderPath, glm::vec3 position);
+	Model(char* modelPath, char* shaderPath);
+	virtual void InitModel();
 	~Model();
 
 	std::vector< glm::vec3 > GetVertices();
 	std::vector< glm::vec2 > GetUvs();
 	std::vector< glm::vec3 > GetNormals();
-	virtual void draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
+	virtual void draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
 
 protected:
 

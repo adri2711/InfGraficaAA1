@@ -2,28 +2,32 @@
 #include "objects/Model.h"
 #include "stb_image.h"
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation,
+Model::Model(char* modelPath, char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation,
              glm::vec3 scale): Object(position, angle, rotation, scale)
 {
-	InitModel(modelPath, shaderPath);
+	this->modelPath = modelPath;
+	this->shaderPath = shaderPath;
 }
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
+Model::Model(char* modelPath, char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
 {
-	InitModel(modelPath, shaderPath);
+	this->modelPath = modelPath;
+	this->shaderPath = shaderPath;
 }
 
-Model::Model(const char* modelPath, const char* shaderPath, glm::vec3 position): Object(position)
+Model::Model(char* modelPath, char* shaderPath, glm::vec3 position): Object(position)
 {
-	InitModel(modelPath, shaderPath);
+	this->modelPath = modelPath;
+	this->shaderPath = shaderPath;
 }
 
-Model::Model(const char* modelPath, const char* shaderPath): Object()
+Model::Model(char* modelPath, char* shaderPath): Object()
 {
-	InitModel(modelPath, shaderPath);
+	this->modelPath = modelPath;
+	this->shaderPath = shaderPath;
 }
 
-void Model::InitModel(const char* modelPath, const char* shaderPath)
+void Model::InitModel()
 {
 	loadOBJ(modelPath, vertices, uvs, normals);
 
@@ -256,12 +260,13 @@ std::vector<glm::vec2> Model::GetUvs()
 	return uvs;
 }
 
-void Model::draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Model::draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
 {
+	this->dt = dt;
+
 	glBindVertexArray(VAO);
 
 	DrawModel(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
-	DrawNormals();
 
 	glBindVertexArray(0);
 }

@@ -6,6 +6,7 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 	//fovMax = glm::radians(120.f);
 	_lightPosition = glm::vec3(0.0f, 2.3f, -3.0f);
 	catModel = new ModelExploding("resources/a_man.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
+	catModel->InitModel();
 	_pointLight = new PointLight(20, _lightPosition);
 	_lightEmissor = new Cube("shaders/Cube", _lightPosition, glm::vec3(1.f, 1.f, 1.f));
 	floor = new Cube("shaders/Cube", _lightPosition, glm::vec3(15.f, 1.f, 15.f), 15.f, 1.f, 15.f);
@@ -23,12 +24,10 @@ AA1::~AA1()
 
 void AA1::render(float dt)
 {	
-	elapsedTime += dt;
-	//CalculateDollyEffect(dt);
-	RenderCat(elapsedTime);
-	RenderPointLight();
-	RenderLightEmissor();
-	RenderScenario();
+	RenderCat(dt);
+	RenderPointLight(dt);
+	RenderLightEmissor(dt);
+	RenderScenario(dt);
 }
 
 void AA1::CalculateDollyEffect(float dt){	
@@ -42,32 +41,32 @@ void AA1::CalculateDollyEffect(float dt){
 	}
 }
 
-void AA1::RenderCat(float elapsedTime)
+void AA1::RenderCat(float dt)
 {
 	//catModel->Move(_globalPosition);
 	catModel->Rotate((int)(elapsedTime * speed) % 360, glm::vec3(0.0f, 1.0f, 0.0f));
 	catModel->SetObjectMatrix(catModel->GetTranslationMatrix() * catModel->GetRotationMatrix());
 	catModel->setCam(_cam);
-	catModel->draw(_lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
+	catModel->draw(dt, _lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
 
 }
 
-void AA1::RenderPointLight()
+void AA1::RenderPointLight(float dt)
 {
 	_pointLight->Move(_lightPosition);
 	_pointLight->SetObjectMatrix(_pointLight->GetTranslationMatrix());
 }
 
-void AA1::RenderLightEmissor()
+void AA1::RenderLightEmissor(float dt)
 {
 	_lightEmissor->Move(_lightPosition);
 	_lightEmissor->SetObjectMatrix(_lightEmissor->GetTranslationMatrix());
 	_lightEmissor->setColor(glm::vec3(_lightColor.r, _lightColor.g, _lightColor.b));	
 	_lightEmissor->setCam(_cam);
-	_lightEmissor->draw(_lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
+	_lightEmissor->draw(dt, _lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
 }
 
-void AA1::RenderScenario()
+void AA1::RenderScenario(float dt)
 {
 	glm::mat4 view, objMat;
 	
@@ -75,13 +74,13 @@ void AA1::RenderScenario()
 	objMat = view;
 	floor->SetTransforms(objMat, _cam);
 	floor->setColor(glm::vec4(.1f,.3f,.3f,1.f));
-	floor->draw(glm::vec3(), glm::vec4(), 0, 0, 0,0, 0);
+	floor->draw(dt, glm::vec3(), glm::vec4(), 0, 0, 0,0, 0);
 
 	view = glm::translate(glm::mat4(), _globalPosition + glm::vec3(-5.f,2.f,-5.f));
 	objMat = view;
 	building->SetTransforms(objMat, _cam);
 	building->setColor(glm::vec4(.5f,.3f,.1f,1.f));
-	building->draw(glm::vec3(), glm::vec4(), 0, 0, 0,0, 0);
+	building->draw(dt, glm::vec3(), glm::vec4(), 0, 0, 0,0, 0);
 }
 
 void AA1::renderGUI()
@@ -106,4 +105,7 @@ void AA1::renderGUI()
 	ImGui::SliderFloat("Specular Coefficient", &_specularReflectionCoefficient, MIN_SPECULAR_COEFFICIENT, MAX_SPECULAR_COEFFICIENT);
 
 	ImGui::SliderFloat("Shininess Coefficient", &_shininessCoefficient, MIN_SHININESS_COEFFICIENT, MAX_SHININESS_COEFFICIENT);
+	if (ImGui::Button("Boom")) {
+		catModel->explode = !catModel->explode;
+	}
 }
