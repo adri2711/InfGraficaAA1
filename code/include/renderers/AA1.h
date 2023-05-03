@@ -2,7 +2,6 @@
 #include "objects/ModelExploding.h"
 #include "objects/PointLight.h"
 #include "objects/Cube.h"
-#include "objects/Cube.h"
 #include "Renderer.h"
 #include "Program.h"
 #include <stdio.h>

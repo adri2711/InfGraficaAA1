@@ -7,6 +7,8 @@
 
 #include <GL_framework.h>
 #include <renderers/AA1.h>
+#include <renderers/TransparencyExercise.h>
+#include <renderers/FrameBufferExercise.h>
 
 namespace {
 	const int expected_fps = 30;
@@ -72,7 +74,7 @@ int main(int argc, char** argv) {
 
 	// Init scene here
 	///////////////////////////////////////////////
-	Renderer *renderer = new AA1(display_w, display_h);
+	Renderer *renderer = new FrameBufferExercise(display_w, display_h);
 	///////////////////////////////////////////////
 	
 	// Setup ImGui binding

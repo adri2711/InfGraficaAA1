@@ -293,7 +293,9 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
     </ClCompile>
     <ClCompile Include="src\renderers\AA1.cpp" />
     <ClCompile Include="src\renderers\ExPlacementTriangles.cpp" />
+    <ClCompile Include="src\renderers\FrameBufferExercise.cpp" />
     <ClCompile Include="src\renderers\Renderer.cpp" />
+    <ClCompile Include="src\renderers\TransparencyExercise.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GL_framework.h" />
@@ -307,7 +309,9 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
     <ClInclude Include="include\Program.h" />
     <ClInclude Include="include\renderers\AA1.h" />
     <ClInclude Include="include\renderers\ExPlacementTriangles.h" />
+    <ClInclude Include="include\renderers\FrameBufferExercise.h" />
     <ClInclude Include="include\renderers\Renderer.h" />
+    <ClInclude Include="include\renderers\TransparencyExercise.h" />
     <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>

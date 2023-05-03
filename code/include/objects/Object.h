@@ -20,7 +20,7 @@ protected:
     glm::mat4 _objectMatrix;
 
     CameraTransforms _cam;
-    glm::vec3 color;
+    glm::vec4 color;
     
     GLuint VAO;
     GLuint VBO[3];
@@ -50,6 +50,6 @@ public:
     glm::mat4 GetObjectMatrix();
 
     void setCam(CameraTransforms cam);
-    void setColor(glm::vec3 color);
+    void setColor(glm::vec4 color);
     virtual void draw(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) = 0;
 };

@@ -62,7 +62,7 @@ void AA1::RenderLightEmissor()
 {
 	_lightEmissor->Move(_lightPosition);
 	_lightEmissor->SetObjectMatrix(_lightEmissor->GetTranslationMatrix());
-	_lightEmissor->setColor(glm::vec3(_lightColor.r, _lightColor.g, _lightColor.b));	
+	_lightEmissor->setColor(glm::vec4(_lightColor.r, _lightColor.g, _lightColor.b, 1));	
 	_lightEmissor->setCam(_cam);
 	_lightEmissor->draw(_lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
 }
