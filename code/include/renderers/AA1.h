@@ -1,5 +1,6 @@
 #pragma once
 #include "objects/ModelExploding.h"
+#include "objects/Billboard.h"
 #include "objects/PointLight.h"
 #include "objects/Cube.h"
 #include "objects/Cube.h"
@@ -58,7 +59,7 @@ private:
     GLuint VBO;
 
     ModelExploding* catModel;
-    
+    Billboard* billboard;
     PointLight* _pointLight;
 
     Cube* _lightEmissor;
@@ -94,7 +95,7 @@ public:
     
 protected:
     void render(float dt);
-    void CalculateDollyEffect(float dt);
+    void RenderBillboard(float dt);
     void RenderCat(float elapsedTime);
     void RenderPointLight(float dt);
     void RenderLightEmissor(float dt);

@@ -1,8 +1,14 @@
 #version 330
-layout (location = 0) in vec3 aPos;
+
+in vec3 in_Position;
+in vec2 in_UV;
+
 uniform mat4 objMat;
 uniform mat4 mvpMat;
 
+out vec2 texCoord;
+
 void main() {
-	gl_Position = mvpMat * objMat * vec4(aPos, 1.0);
+	gl_Position = mvpMat * objMat * vec4(in_Position, 1.0);
+	texCoord = in_UV;
 }

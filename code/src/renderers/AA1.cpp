@@ -7,6 +7,8 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 	_lightPosition = glm::vec3(0.0f, 2.3f, -3.0f);
 	catModel = new ModelExploding("resources/a_man.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
 	catModel->InitModel();
+	billboard = new Billboard(3, "resources/container.jpg", "shaders/Billboard", glm::vec3(3.0f, 0.f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
+	billboard->Init();
 	_pointLight = new PointLight(20, _lightPosition);
 	_lightEmissor = new Cube("shaders/Cube", _lightPosition, glm::vec3(1.f, 1.f, 1.f));
 	floor = new Cube("shaders/Cube", _lightPosition, glm::vec3(15.f, 1.f, 15.f), 15.f, 1.f, 15.f);
@@ -17,6 +19,7 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 AA1::~AA1()
 {
 	delete catModel;
+	delete billboard;
 	delete _pointLight;
 	delete _lightEmissor;
 	delete _auxCube;
@@ -27,18 +30,14 @@ void AA1::render(float dt)
 	RenderCat(dt);
 	RenderPointLight(dt);
 	RenderLightEmissor(dt);
-	RenderScenario(dt);
+	//RenderScenario(dt);
 }
 
-void AA1::CalculateDollyEffect(float dt){	
-
-	_globalPosition = glm::vec3(0.0f, -1.5f, -7.0f + dollyMovement * dollyProg);
-	
-	if (dollyProg < 1.f) {
-		FOV = lerp(fovMin, fovMax, dollyProg);
-		_cam._projection = glm::perspective(FOV, (float)width / (float)height, zNear, zFar);
-		dollyProg = fmin(dollyProg + dt * dollySpeed, 1.f);
-	}
+void AA1::RenderBillboard(float dt)
+{
+	billboard->SetObjectMatrix(billboard->GetTranslationMatrix() * billboard->GetRotationMatrix());
+	billboard->setCam(_cam);
+	billboard->draw(dt, _lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
 }
 
 void AA1::RenderCat(float dt)
