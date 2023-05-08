@@ -28,6 +28,7 @@ AA1::~AA1()
 void AA1::render(float dt)
 {	
 	RenderCat(dt);
+	RenderBillboard(dt);
 	RenderPointLight(dt);
 	RenderLightEmissor(dt);
 	//RenderScenario(dt);

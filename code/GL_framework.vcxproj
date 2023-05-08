@@ -292,9 +292,11 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
       <AdditionalIncludeDirectories>.\include;.\include\SDL2;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="src\objects\TextureObject.cpp" />
     <ClCompile Include="src\renderers\AA1.cpp" />
     <ClCompile Include="src\renderers\ExPlacementTriangles.cpp" />
     <ClCompile Include="src\renderers\Renderer.cpp" />
+    <ClCompile Include="src\renderers\Texturing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GL_framework.h" />
@@ -306,10 +308,12 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
     <ClInclude Include="include\objects\ModelExploding.h" />
     <ClInclude Include="include\objects\Object.h" />
     <ClInclude Include="include\objects\PointLight.h" />
+    <ClInclude Include="include\objects\TextureObject.h" />
     <ClInclude Include="include\Program.h" />
     <ClInclude Include="include\renderers\AA1.h" />
     <ClInclude Include="include\renderers\ExPlacementTriangles.h" />
     <ClInclude Include="include\renderers\Renderer.h" />
+    <ClInclude Include="include\renderers\Texturing.h" />
     <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>

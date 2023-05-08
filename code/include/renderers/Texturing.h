@@ -1,19 +1,12 @@
 #pragma once
 #include "Renderer.h"
 #include <objects/Cube.h>
+#include "objects/TextureObject.h"
 
 
 class Texturing : public Renderer
 {
-	Program* program;
-	GLuint VAO;
-	GLuint VBO;
-	GLuint EBO;
-	GLuint texture;
-
-	glm::mat4 objMat;
-
-	glm::vec4 color;
+	TexturePlane* textureObject;
 
 protected:
 

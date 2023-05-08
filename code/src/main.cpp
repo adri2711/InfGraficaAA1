@@ -7,6 +7,7 @@
 
 #include <GL_framework.h>
 #include <renderers/AA1.h>
+//#include <renderers/Texturing.h>
 
 namespace {
 	const int expected_fps = 30;

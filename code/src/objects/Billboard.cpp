@@ -1,5 +1,5 @@
 #include "objects/Billboard.h"
-#define STB_IMAGE_IMPLEMENTATION
+//#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 
@@ -75,8 +75,8 @@ void Billboard::Init()
 	SetupData();
 	SetupProgram(shaderPath);
 	program->link();
-	LoadTexture();
 	SetupBuffers();
+	LoadTexture();
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -107,7 +107,8 @@ void Billboard::SetupProgram(std::string shaderPath)
 
 	// Bind Attrib locations
 	program->bindAttribLocation(0, "in_Position");
-	program->bindAttribLocation(1, "in_UV");
+	program->bindAttribLocation(1, "in_Normals");
+	program->bindAttribLocation(2, "in_UV");
 }
 
 void Billboard::SetupBuffers()
@@ -130,8 +131,8 @@ void Billboard::SetupBuffers()
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[2]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * uvs.size(), &uvs[0], GL_STATIC_DRAW);
-	glVertexAttribPointer((GLuint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(1);
+	glVertexAttribPointer((GLuint)2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(2);
 
 	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, );
