@@ -7,7 +7,7 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 	_lightPosition = glm::vec3(0.0f, 2.3f, -3.0f);
 	catModel = new ModelExploding("resources/a_man.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
 	catModel->InitModel();
-	billboard = new Billboard(3, "resources/texture1.jpg", "shaders/Billboard", glm::vec3(3.0f, 0.f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
+	billboard = new Billboard(1, "resources/texture1.jpg", "shaders/Billboard", glm::vec3(3.0f, 0.f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
 	billboard->Init();
 	texture = new TexturePlane[6];
 	SetTexturesMultiple();
@@ -135,6 +135,18 @@ void AA1::RenderScenario(float dt)
 
 void AA1::renderGUI()
 {
+	if (ImGui::Button("Boom")) {
+		catModel->explode = !catModel->explode;
+	}
+	if (ImGui::Button("Toggle Cube Textures")) {
+		cubeMultiple = !cubeMultiple;
+		if (cubeMultiple) {
+			SetTexturesMultiple();
+		}
+		else {
+			SetTexturesSingle();
+		}
+	}
 
 	ImGui::SliderFloat("X Position Light", &_lightPosition.x, MIN_X_POSITION_LIGHT, MAX_X_POSITION_LIGHT);
 	ImGui::SliderFloat("Y Position Light", &_lightPosition.y, MIN_Y_POSITION_LIGHT, MAX_Y_POSITION_LIGHT);
@@ -155,16 +167,4 @@ void AA1::renderGUI()
 	ImGui::SliderFloat("Specular Coefficient", &_specularReflectionCoefficient, MIN_SPECULAR_COEFFICIENT, MAX_SPECULAR_COEFFICIENT);
 
 	ImGui::SliderFloat("Shininess Coefficient", &_shininessCoefficient, MIN_SHININESS_COEFFICIENT, MAX_SHININESS_COEFFICIENT);
-	if (ImGui::Button("Boom")) {
-		catModel->explode = !catModel->explode;
-	}
-	if (ImGui::Button("Toggle Cube Textures")) {
-		cubeMultiple = !cubeMultiple;
-		if (cubeMultiple) {
-			SetTexturesMultiple();
-		}
-		else {
-			SetTexturesSingle();
-		}
-	}
 }

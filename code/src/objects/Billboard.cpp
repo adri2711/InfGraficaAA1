@@ -39,6 +39,8 @@ void Billboard::SetupUniforms(glm::vec3 lightPosition, glm::vec3 lightColor, flo
 {
 	float radiantEffect = radiantPower / (4.f * glm::pi<float>());
 
+	glUniform1f(program->getUniform("quadSize"), size);
+
 	glUniformMatrix4fv(
 		program->getUniform("objectMatrix"),
 		1, GL_FALSE, glm::value_ptr(_objectMatrix)
@@ -50,6 +52,10 @@ void Billboard::SetupUniforms(glm::vec3 lightPosition, glm::vec3 lightColor, flo
 	glUniformMatrix4fv(
 		program->getUniform("mvpMatrix"),
 		1, GL_FALSE, glm::value_ptr(_cam._MVP)
+	);
+	glUniformMatrix4fv(
+		program->getUniform("pMatrix"),
+		1, GL_FALSE, glm::value_ptr(_cam._projection)
 	);
 	glUniform3f(
 		program->getUniform("color"),
