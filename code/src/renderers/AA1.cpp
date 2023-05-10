@@ -10,17 +10,15 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 	billboard = new Billboard(3, "resources/texture1.jpg", "shaders/Billboard", glm::vec3(3.0f, 0.f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
 	billboard->Init();
 	texture = new TexturePlane[6];
-	for (int i = 0; i < 6; i++) {
-		std::string p = "resources/texturex.jpg";
-		p[17] = i + '0';
-		texture[i].SetTexture(p);
-	}
+	SetTexturesMultiple();
 	_pointLight = new PointLight(20, _lightPosition);
 	_lightEmissor = new Cube("shaders/Cube", _lightPosition, glm::vec3(1.f, 1.f, 1.f));
 	floor = new Cube("shaders/Cube", _lightPosition, glm::vec3(15.f, 1.f, 15.f), 15.f, 1.f, 15.f);
 	building = new Cube("shaders/Cube", _lightPosition, glm::vec3(5.f, 11.f, 15.f), 5.f, 11.f, 5.f);
 	_lightColor = glm::vec3(1,1,1);
 }
+
+
 
 AA1::~AA1()
 {
@@ -29,6 +27,22 @@ AA1::~AA1()
 	delete _pointLight;
 	delete _lightEmissor;
 	delete _auxCube;
+}
+
+void AA1::SetTexturesSingle()
+{
+	for (int i = 0; i < 6; i++) {
+		texture[i].SetTexture("resources/texture1.jpg");
+	}
+}
+
+void AA1::SetTexturesMultiple()
+{
+	for (int i = 0; i < 6; i++) {
+		std::string p = "resources/texturex.jpg";
+		p[17] = i + '0';
+		texture[i].SetTexture(p);
+	}
 }
 
 void AA1::render(float dt)
@@ -58,7 +72,7 @@ void AA1::RenderTexture(float dt) {
 		 glm::vec3(1.f, 0.f, 0.f),
 		 glm::vec3(1.f, 0.f, 0.f)
 	};
-	glm::vec3 cubePos = glm::vec3(-3.f, -.5f, -3.f);
+	glm::vec3 cubePos = glm::vec3(-3.f, 0.f, -3.f);
 	for (int i = 0; i < 6; i++) {
 		texture[i].Move(cubePos + facePositions[i]);
 		if (faceRotations[i] != glm::vec3(0.f, 0.f, 0.f)) {
@@ -143,5 +157,14 @@ void AA1::renderGUI()
 	ImGui::SliderFloat("Shininess Coefficient", &_shininessCoefficient, MIN_SHININESS_COEFFICIENT, MAX_SHININESS_COEFFICIENT);
 	if (ImGui::Button("Boom")) {
 		catModel->explode = !catModel->explode;
+	}
+	if (ImGui::Button("Toggle Cube Textures")) {
+		cubeMultiple = !cubeMultiple;
+		if (cubeMultiple) {
+			SetTexturesMultiple();
+		}
+		else {
+			SetTexturesSingle();
+		}
 	}
 }
