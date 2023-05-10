@@ -30,6 +30,7 @@ void Billboard::DrawBillboard(glm::vec3 lightPosition, glm::vec3 lightColor, flo
 {
 	program->use();
 	SetupUniforms(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
+	glPointSize(40.f);
 	glDrawArrays(GL_POINTS, 0, vertices.size());
 	program->unuse();
 }

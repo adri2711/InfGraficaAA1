@@ -40,5 +40,5 @@ void main() {
 	
 	vec3 lightResult = ambientReflection + (diffuseReflection + specularReflection) * radiance;
 	
-	out_Color =  vec4(lightResult, 1.0f) * vec4(color, 1.0f);
+	out_Color = vec4(lightResult, 1.0f) * vec4(color, 1.0f);
 }
