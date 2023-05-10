@@ -2,7 +2,7 @@
 
 Texturing::Texturing(int width, int height) : Renderer(width, height)
 {
-	textureObject = new TexturePlane(glm::vec3(0.f, 0.f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
+	textureObject = new TexturePlane();
 }
 
 Texturing::~Texturing()

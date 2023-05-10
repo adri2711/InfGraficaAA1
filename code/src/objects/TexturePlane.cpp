@@ -1,9 +1,9 @@
-#include "objects/TextureObject.h"
+#include "objects/TexturePlane.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-TexturePlane::TexturePlane(glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale) : Object(position, angle, rotation, scale)
+TexturePlane::TexturePlane() : Object()
 {
 	float vertices[]{
 		//positions		   //texture coordinates
@@ -12,8 +12,6 @@ TexturePlane::TexturePlane(glm::vec3 position, float angle, glm::vec3 rotation, 
 		-0.5f, -0.5f, 0.f, 0.f, 0.f, //bottom left
 		 0.5f, -0.5f, 0.f, 1.f, 0.f  //bottom right
 	};
-
-
 	unsigned int indices[]{
 
 		0, 1, 3, //top triangle
@@ -39,25 +37,7 @@ TexturePlane::TexturePlane(glm::vec3 position, float angle, glm::vec3 rotation, 
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(sizeof(float) * 3));
 	glEnableVertexAttribArray(1);
 
-	//Load image image un CPU
-	int imageWidth, imageHeight, numberChannels;
-	unsigned char* data = stbi_load("resources/container.jpg", &imageWidth, &imageHeight, &numberChannels, 0);
-
-	if (data)
-	{
-		//Generate texture
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		//Handle error
-		std::cerr << "Error loading the texture" << std::endl;
-	}
-
-	stbi_image_free(data);
+	GenerateTexture();
 
 	program = new Program("Square");
 	program->compileAndAttachShader("shaders/texture.vert", GL_VERTEX_SHADER);
@@ -71,6 +51,34 @@ TexturePlane::TexturePlane(glm::vec3 position, float angle, glm::vec3 rotation, 
 	glBindVertexArray(0);
 
 	program->unuse();
+}
+
+void TexturePlane::SetTexture(std::string path) {
+	texturePath = path;
+	GenerateTexture();
+}
+
+void TexturePlane::GenerateTexture() {
+	//Load image image un CPU
+	int imageWidth, imageHeight, numberChannels;
+	unsigned char* data = stbi_load(texturePath.c_str(), &imageWidth, &imageHeight, &numberChannels, 0);
+
+	if (data)
+	{
+		std::cout << texturePath << " loaded" << std::endl;
+		//Generate texture
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		//Handle error
+		std::cerr << "Error loading the texture: " << texturePath << std::endl;
+	}
+
+	stbi_image_free(data);
 }
 
 TexturePlane::~TexturePlane()

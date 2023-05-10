@@ -12,6 +12,7 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <cmath>
+#include "objects/TexturePlane.h"
 #include <iostream>
 #include <lerp.h>
 
@@ -60,6 +61,7 @@ private:
 
     ModelExploding* catModel;
     Billboard* billboard;
+    TexturePlane* texture;
     PointLight* _pointLight;
 
     Cube* _lightEmissor;
@@ -95,6 +97,7 @@ public:
     
 protected:
     void render(float dt);
+    void RenderTexture(float dt);
     void RenderBillboard(float dt);
     void RenderCat(float elapsedTime);
     void RenderPointLight(float dt);
