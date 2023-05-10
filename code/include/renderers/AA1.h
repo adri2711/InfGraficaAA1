@@ -90,12 +90,15 @@ private:
     float dollyMovement = 3.75f;
 
     bool explode = false;
+    bool cubeMultiple = true;
 
 public:
     AA1(int width, int height);
     ~AA1();
     
 protected:
+    void SetTexturesSingle();
+    void SetTexturesMultiple();
     void render(float dt);
     void RenderTexture(float dt);
     void RenderBillboard(float dt);

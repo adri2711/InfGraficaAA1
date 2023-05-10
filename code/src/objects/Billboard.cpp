@@ -30,6 +30,7 @@ void Billboard::DrawBillboard(glm::vec3 lightPosition, glm::vec3 lightColor, flo
 {
 	program->use();
 	SetupUniforms(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
+	glPointSize(40.f);
 	glDrawArrays(GL_POINTS, 0, vertices.size());
 	program->unuse();
 }
@@ -37,6 +38,8 @@ void Billboard::DrawBillboard(glm::vec3 lightPosition, glm::vec3 lightColor, flo
 void Billboard::SetupUniforms(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
 {
 	float radiantEffect = radiantPower / (4.f * glm::pi<float>());
+
+	glUniform1f(program->getUniform("quadSize"), size);
 
 	glUniformMatrix4fv(
 		program->getUniform("objectMatrix"),
@@ -49,6 +52,10 @@ void Billboard::SetupUniforms(glm::vec3 lightPosition, glm::vec3 lightColor, flo
 	glUniformMatrix4fv(
 		program->getUniform("mvpMatrix"),
 		1, GL_FALSE, glm::value_ptr(_cam._MVP)
+	);
+	glUniformMatrix4fv(
+		program->getUniform("pMatrix"),
+		1, GL_FALSE, glm::value_ptr(_cam._projection)
 	);
 	glUniform3f(
 		program->getUniform("color"),
