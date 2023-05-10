@@ -140,6 +140,7 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
     <ClCompile Include="src\lerp.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\Axis.cpp" />
+    <ClCompile Include="src\objects\Billboard.cpp" />
     <ClCompile Include="src\objects\Cube.cpp" />
     <ClCompile Include="src\objects\Model.cpp" />
     <ClCompile Include="src\objects\ModelExploding.cpp" />
@@ -291,23 +292,28 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
       <AdditionalIncludeDirectories>.\include;.\include\SDL2;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="src\objects\TexturePlane.cpp" />
     <ClCompile Include="src\renderers\AA1.cpp" />
     <ClCompile Include="src\renderers\ExPlacementTriangles.cpp" />
     <ClCompile Include="src\renderers\Renderer.cpp" />
+    <ClCompile Include="src\renderers\Texturing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GL_framework.h" />
     <ClInclude Include="include\lerp.h" />
     <ClInclude Include="include\objects\Axis.h" />
+    <ClInclude Include="include\objects\Billboard.h" />
     <ClInclude Include="include\objects\Cube.h" />
     <ClInclude Include="include\objects\Model.h" />
     <ClInclude Include="include\objects\ModelExploding.h" />
     <ClInclude Include="include\objects\Object.h" />
     <ClInclude Include="include\objects\PointLight.h" />
+    <ClInclude Include="include\objects\TexturePlane.h" />
     <ClInclude Include="include\Program.h" />
     <ClInclude Include="include\renderers\AA1.h" />
     <ClInclude Include="include\renderers\ExPlacementTriangles.h" />
     <ClInclude Include="include\renderers\Renderer.h" />
+    <ClInclude Include="include\renderers\Texturing.h" />
     <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>

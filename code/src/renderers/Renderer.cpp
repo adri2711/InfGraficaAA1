@@ -95,10 +95,11 @@ void Renderer::GLrender(float dt)
 
 	_cam._modelView = glm::mat4(1.f);
 	_cam._modelView = glm::translate(_cam._modelView, glm::vec3(panv[0], panv[1], panv[2]));
+	_cam._modelView = glm::rotate(_cam._modelView, rota[1], glm::vec3(1.f, 0.f, 0.f));
+	_cam._modelView = glm::rotate(_cam._modelView, rota[0], glm::vec3(0.f, 1.f, 0.f));
+
 	_cam._cameraRotationMat = glm::rotate(glm::mat4(), rota[1], glm::vec3(1.f, 0.f, 0.f));
 	_cam._cameraRotationMat = glm::rotate(_cam._cameraRotationMat, rota[0], glm::vec3(0.f, 1.f, 0.f));
-
-	_cam._modelView *= _cam._cameraRotationMat;
 
 	_cam._MVP = _cam._projection * _cam._modelView;
 

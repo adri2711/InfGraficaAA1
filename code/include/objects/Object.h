@@ -27,9 +27,12 @@ protected:
     Program* program;
     Program* programNormal;
 
+    char* modelPath;
+    char* shaderPath;
+
     std::vector< glm::vec3 > vertices;
     std::vector< glm::vec2 > uvs;
-    std::vector< glm::vec3 > normals; // Won't be used at the moment.
+    std::vector< glm::vec3 > normals;
     
 public:
 

@@ -7,6 +7,14 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 	_lightPosition = glm::vec3(0.0f, 2.3f, -3.0f);
 	catModel = new ModelExploding("resources/a_man.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
 	catModel->InitModel();
+	billboard = new Billboard(3, "resources/texture1.jpg", "shaders/Billboard", glm::vec3(3.0f, 0.f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 1.f));
+	billboard->Init();
+	texture = new TexturePlane[6];
+	for (int i = 0; i < 6; i++) {
+		std::string p = "resources/texturex.jpg";
+		p[17] = i + '0';
+		texture[i].SetTexture(p);
+	}
 	_pointLight = new PointLight(20, _lightPosition);
 	_lightEmissor = new Cube("shaders/Cube", _lightPosition, glm::vec3(1.f, 1.f, 1.f));
 	floor = new Cube("shaders/Cube", _lightPosition, glm::vec3(15.f, 1.f, 15.f), 15.f, 1.f, 15.f);
@@ -17,6 +25,7 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 AA1::~AA1()
 {
 	delete catModel;
+	delete billboard;
 	delete _pointLight;
 	delete _lightEmissor;
 	delete _auxCube;
@@ -25,20 +34,47 @@ AA1::~AA1()
 void AA1::render(float dt)
 {	
 	RenderCat(dt);
+	RenderTexture(dt);
+	RenderBillboard(dt);
 	RenderPointLight(dt);
 	RenderLightEmissor(dt);
-	RenderScenario(dt);
+	//RenderScenario(dt);
 }
 
-void AA1::CalculateDollyEffect(float dt){	
-
-	_globalPosition = glm::vec3(0.0f, -1.5f, -7.0f + dollyMovement * dollyProg);
-	
-	if (dollyProg < 1.f) {
-		FOV = lerp(fovMin, fovMax, dollyProg);
-		_cam._projection = glm::perspective(FOV, (float)width / (float)height, zNear, zFar);
-		dollyProg = fmin(dollyProg + dt * dollySpeed, 1.f);
+void AA1::RenderTexture(float dt) {
+	glm::vec3 facePositions[]{
+		 glm::vec3(.5f, 0.f, 0.f),
+		 glm::vec3(-.5f, 0.f, 0.f),
+		 glm::vec3(0.f, 0.f, .5f),
+		 glm::vec3(0.f, 0.f, -.5f),
+		 glm::vec3(0.f, .5f, 0.f),
+		 glm::vec3(0.f, -.5f, 0.f)
+	};
+	glm::vec3 faceRotations[]{
+		 glm::vec3(0.f, 1.f, 0.f),
+		 glm::vec3(0.f, 1.f, 0.f),
+		 glm::vec3(0.f, 0.f, 0.f),
+		 glm::vec3(0.f, 0.f, 0.f),
+		 glm::vec3(1.f, 0.f, 0.f),
+		 glm::vec3(1.f, 0.f, 0.f)
+	};
+	glm::vec3 cubePos = glm::vec3(-3.f, -.5f, -3.f);
+	for (int i = 0; i < 6; i++) {
+		texture[i].Move(cubePos + facePositions[i]);
+		if (faceRotations[i] != glm::vec3(0.f, 0.f, 0.f)) {
+			texture[i].Rotate(90, faceRotations[i]);
+		}
+		texture[i].SetObjectMatrix(texture[i].GetTranslationMatrix() * texture[i].GetRotationMatrix());
+		texture[i].setCam(_cam);
+		texture[i].draw(dt, _lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
 	}
+}
+
+void AA1::RenderBillboard(float dt)
+{
+	billboard->SetObjectMatrix(billboard->GetTranslationMatrix());
+	billboard->setCam(_cam);
+	billboard->draw(dt, _lightPosition, _lightColor, _radiantPower, _ambientReflectionCoefficient, _diffuseReflectionCoefficient, _specularReflectionCoefficient, _shininessCoefficient);
 }
 
 void AA1::RenderCat(float dt)

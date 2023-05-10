@@ -11,8 +11,6 @@ class Model : public Object
 public:
 
 	glm::vec3 color;
-	char* modelPath;
-	char* shaderPath;
 	float dt;
 
 	Model(char* modelPath, char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
