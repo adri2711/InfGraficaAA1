@@ -191,10 +191,8 @@ void Model::SetupBuffers()
 	unsigned char* data = stbi_load( "", &imageHeight, &imageHeight, &numberChannels, 0);*/
 }
 
-void Model::SetupUniformsModel(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Model::SetupUniformsModel()
 {
-	float radiantEffect = radiantPower / (4.f * glm::pi<float>());
-
 	glUniformMatrix4fv(
 		program->getUniform("objectMatrix"),
 		1, GL_FALSE, glm::value_ptr(_objectMatrix)
@@ -211,26 +209,12 @@ void Model::SetupUniformsModel(glm::vec3 lightPosition, glm::vec3 lightColor, fl
 		program->getUniform("color"),
 		color.r, color.g, color.b
 	);
-
-	glUniform3f(program->getUniform("_lightColor"), lightColor.r, lightColor.g, lightColor.b);
-
-	glUniform3f(program->getUniform("_lightPosition"), lightPosition.x, lightPosition.y, lightPosition.z);
-
-	glUniform1f(program->getUniform("_shininessCoefficient"), shininessCoefficient);
-
-	glUniform1f(program->getUniform("_ambientReflectionCoefficient"), ambientReflectionCoefficient);
-
-	glUniform1f(program->getUniform("_diffuseReflectionCoefficient"), diffuseReflectionCoefficient);
-
-	glUniform1f(program->getUniform("_specularReflectionCoefficient"), specularReflectionCoefficient);
-
-	glUniform1f(program->getUniform("_radiantEffect"), radiantEffect);
 }
 
-void Model::DrawModel(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Model::DrawModel()
 {
 	program->use();
-	SetupUniformsModel(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
+	SetupUniformsModel();
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	program->unuse();
 }
@@ -260,13 +244,13 @@ std::vector<glm::vec2> Model::GetUvs()
 	return uvs;
 }
 
-void Model::draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Model::draw(float dt)
 {
 	this->dt = dt;
 
 	glBindVertexArray(VAO);
 
-	DrawModel(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
+	DrawModel();
 
 	glBindVertexArray(0);
 }

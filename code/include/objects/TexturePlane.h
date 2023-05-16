@@ -10,10 +10,10 @@ protected:
     std::string texturePath = "resources/texture0.jpg";
     void GenerateTexture();
 public:
-    TexturePlane();
+    TexturePlane(std::string texturePath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
     ~TexturePlane();
     void DrawTexture();
     void SetTexture(std::string path);
-    void draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
+    void draw(float dt) override;
 };
 

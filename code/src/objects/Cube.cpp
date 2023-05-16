@@ -113,7 +113,7 @@ void Cube::SetTransforms(glm::mat4 objectMatrix, CameraTransforms cam)
 }
 
 
-void Cube::draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Cube::draw(float dt)
 {
 	glBindVertexArray(VAO);
 	program->use();

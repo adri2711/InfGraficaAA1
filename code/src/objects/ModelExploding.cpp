@@ -15,9 +15,9 @@ void ModelExploding::SetupProgram(std::string shaderPath)
 
 }
 
-void ModelExploding::SetupUniformsModel(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void ModelExploding::SetupUniformsModel()
 {
-	Model::SetupUniformsModel(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
+	Model::SetupUniformsModel();
 	if (explode) {
 		explosionTime += dt;
 	}

@@ -3,8 +3,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-TexturePlane::TexturePlane() : Object()
+TexturePlane::TexturePlane(std::string texturePath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale) : Object(position, angle, rotation, scale)
 {
+	this->texturePath = texturePath;
+
 	float vertices[]{
 		//positions		   //texture coordinates
 		 0.5f,  0.5f, 0.f, 1.f, 1.f, //top right
@@ -111,7 +113,7 @@ void TexturePlane::DrawTexture()
 	glBindVertexArray(0);
 }
 
-void TexturePlane::draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void TexturePlane::draw(float dt)
 {
 	DrawTexture();
 }

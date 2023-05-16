@@ -23,7 +23,7 @@ public:
 	std::vector< glm::vec3 > GetVertices();
 	std::vector< glm::vec2 > GetUvs();
 	std::vector< glm::vec3 > GetNormals();
-	virtual void draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
+	virtual void draw(float dt) override;
 
 protected:
 
@@ -35,8 +35,8 @@ protected:
 	virtual void SetupProgramNormal(std::string shaderPath);
 	virtual void SetupBuffers();
 
-	virtual void SetupUniformsModel(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient);
-	virtual void DrawModel(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient);
+	virtual void SetupUniformsModel();
+	virtual void DrawModel();
 	virtual void SetupUniformsNormals();
 	virtual void DrawNormals();
 

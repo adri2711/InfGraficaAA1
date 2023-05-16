@@ -12,6 +12,6 @@ public:
     ModelExploding(char* modelPath, char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
 protected:
     void SetupProgram(std::string shaderPath) override;
-    void SetupUniformsModel(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient) override;
+    void SetupUniformsModel() override;
 };
 

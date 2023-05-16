@@ -16,29 +16,27 @@ Billboard::~Billboard()
 {
 }
 
-void Billboard::draw(float dt, glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Billboard::draw(float dt)
 {
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glBindVertexArray(VAO);
 
-	DrawBillboard(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
+	DrawBillboard();
 
 	glBindVertexArray(0);
 }
 
-void Billboard::DrawBillboard(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Billboard::DrawBillboard()
 {
 	program->use();
-	SetupUniforms(lightPosition, lightColor, radiantPower, ambientReflectionCoefficient, diffuseReflectionCoefficient, specularReflectionCoefficient, shininessCoefficient);
+	SetupUniforms();
 	glPointSize(40.f);
 	glDrawArrays(GL_POINTS, 0, vertices.size());
 	program->unuse();
 }
 
-void Billboard::SetupUniforms(glm::vec3 lightPosition, glm::vec3 lightColor, float radiantPower, float ambientReflectionCoefficient, float diffuseReflectionCoefficient, float specularReflectionCoefficient, float shininessCoefficient)
+void Billboard::SetupUniforms()
 {
-	float radiantEffect = radiantPower / (4.f * glm::pi<float>());
-
 	glUniform1f(program->getUniform("quadSize"), size);
 
 	glUniformMatrix4fv(
@@ -61,20 +59,6 @@ void Billboard::SetupUniforms(glm::vec3 lightPosition, glm::vec3 lightColor, flo
 		program->getUniform("color"),
 		color.r, color.g, color.b
 	);
-
-	glUniform3f(program->getUniform("_lightColor"), lightColor.r, lightColor.g, lightColor.b);
-
-	glUniform3f(program->getUniform("_lightPosition"), lightPosition.x, lightPosition.y, lightPosition.z);
-
-	glUniform1f(program->getUniform("_shininessCoefficient"), shininessCoefficient);
-
-	glUniform1f(program->getUniform("_ambientReflectionCoefficient"), ambientReflectionCoefficient);
-
-	glUniform1f(program->getUniform("_diffuseReflectionCoefficient"), diffuseReflectionCoefficient);
-
-	glUniform1f(program->getUniform("_specularReflectionCoefficient"), specularReflectionCoefficient);
-
-	glUniform1f(program->getUniform("_radiantEffect"), radiantEffect);
 }
 
 void Billboard::Init()

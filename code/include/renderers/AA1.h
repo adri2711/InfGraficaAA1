@@ -16,42 +16,6 @@
 #include <iostream>
 #include <lerp.h>
 
-#define MIN_X_POSITION_LIGHT -5
-#define MAX_X_POSITION_LIGHT 5
-
-#define MIN_Y_POSITION_LIGHT -5
-#define MAX_Y_POSITION_LIGHT 5
-
-#define MIN_Z_POSITION_LIGHT -5 
-#define MAX_Z_POSITION_LIGHT 5
-
-#define MIN_RADIANT_POWER 1
-#define MAX_RADIANT_POWER 250
-
-#define MIN_RED_COLOR 0
-#define MAX_RED_COLOR 1
-
-#define MIN_GREEN_COLOR 0
-#define MAX_GREEN_COLOR 1
-
-#define MIN_BLUE_COLOR 0
-#define MAX_BLUE_COLOR 1
-
-#define MIN_ALPHA_COLOR 0
-#define MAX_ALPHA_COLOR 1
-
-#define MIN_AMBIENT_COEFFICIENT 0
-#define MAX_AMBIENT_COEFFICIENT 1
-
-#define MIN_DIFFUSE_COEFFICIENT 0
-#define MAX_DIFFUSE_COEFFICIENT 1
-
-#define MIN_SPECULAR_COEFFICIENT 0
-#define MAX_SPECULAR_COEFFICIENT 1
-
-#define MIN_SHININESS_COEFFICIENT 1
-#define MAX_SHININESS_COEFFICIENT 64
-
 class AA1 : public Renderer
 {
 private:
@@ -59,52 +23,14 @@ private:
     GLuint VAO;
     GLuint VBO;
 
-    ModelExploding* catModel;
-    Billboard* billboard;
-    TexturePlane* texture;
-    PointLight* _pointLight;
-
-    Cube* _lightEmissor;
-    Cube* _auxCube;
-
-    glm::vec3 _globalPosition;
-    
-    glm::vec3 _lightPosition;
-    glm::vec3 _lightColor;
-    float _radiantPower;
-
-    float _ambientReflectionCoefficient;
-    float _diffuseReflectionCoefficient;
-    float _specularReflectionCoefficient;
-    float _shininessCoefficient;
-    
-    Cube* floor;
-    Cube* building;
-    float elapsedTime;
-    float speed = 63.f;
-
-    float dollyProg = 0.f;
-    float dollySpeed = 0.8f;
-    float fovMin;
-    float fovMax;
-    float dollyMovement = 3.75f;
-
-    bool explode = false;
-    bool cubeMultiple = true;
+    TexturePlane* floor;
+    Model* cars;
 
 public:
     AA1(int width, int height);
     ~AA1();
     
 protected:
-    void SetTexturesSingle();
-    void SetTexturesMultiple();
     void render(float dt);
-    void RenderTexture(float dt);
-    void RenderBillboard(float dt);
-    void RenderCat(float elapsedTime);
-    void RenderPointLight(float dt);
-    void RenderLightEmissor(float dt);
-    void RenderScenario(float dt);
     void renderGUI() override;
 };
