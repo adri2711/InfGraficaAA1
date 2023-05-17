@@ -42,5 +42,5 @@ void main() {
 
 	vec3 lightResult = ambientReflection + (diffuseReflection + specularReflection) * radiance;
 	
-	out_Color = vec4(ambientReflection, 1.0f) * texture(ourTexture, texCoord);
+	out_Color = vec4(lightResult, 1.0f) * texture(ourTexture, texCoord);
 }

@@ -3,7 +3,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-TexturePlane::TexturePlane(glm::vec3 vertexPositions[], glm::vec3 planeVectors[]) : Object()
+TexturePlane::TexturePlane(glm::vec3 vertexPositions[], glm::vec3 normal) : Object()
 {
 	float vertices[]{
 		//positions															 //texture coordinates
@@ -17,10 +17,6 @@ TexturePlane::TexturePlane(glm::vec3 vertexPositions[], glm::vec3 planeVectors[]
 		0, 1, 3, //top triangle
 		1, 2, 3  //bottom triangle	
 	};
-
-	glm::vec3 normal = glm::cross(planeVectors[0], planeVectors[1]);
-
-	normal /= sqrt(glm::dot(normal, normal));
 
 	glm::vec3 normals[]{normal, normal, normal, normal};
 

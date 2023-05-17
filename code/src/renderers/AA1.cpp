@@ -28,30 +28,19 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 		glm::vec3(0.5f, 0.5f, -0.5f) + _cubePosition// Top Back Right
 	};
 
-	glm::vec3 bottomPlane[] = {vertexs[2], vertexs[1], vertexs[0], vertexs[3]};
-	glm::vec3 bottomPlaneVectors[] = {glm::vec3(0, 0, 1), glm::vec3(1, 0, 0)};
-
+	glm::vec3 bottomPlane[] = { vertexs[2], vertexs[1], vertexs[0], vertexs[3] };
 	glm::vec3 topPlane[] = {vertexs[7], vertexs[4], vertexs[5], vertexs[6]};
-	glm::vec3 topPlaneVectors[] = {glm::vec3(1, 0, 0), glm::vec3(0, 0, 1)};
+	glm::vec3 leftPlane[] = { vertexs[5], vertexs[4], vertexs[0], vertexs[1] };
+	glm::vec3 rightPlane[] = { vertexs[7], vertexs[6], vertexs[2], vertexs[3] };
+	glm::vec3 frontPlane[] = { vertexs[6], vertexs[5], vertexs[1], vertexs[2] };
+	glm::vec3 backPlane[] = { vertexs[7], vertexs[4], vertexs[0], vertexs[3] };
 
-	glm::vec3 leftPlane[] = {vertexs[5], vertexs[4], vertexs[0], vertexs[1]};
-	glm::vec3 leftPlaneVectors[] = {glm::vec3(0, 1, 0), glm::vec3(0, 0, 1)};
-
-	glm::vec3 rightPlane[] = {vertexs[7], vertexs[6], vertexs[2], vertexs[3]};
-	glm::vec3 righttPlaneVectors[] = {glm::vec3(0, 0, 1), glm::vec3(0, 1, 0)};
-	
-	glm::vec3 frontPlane[] = {vertexs[6], vertexs[5], vertexs[1], vertexs[2]};
-	glm::vec3 frontPlaneVectors[] = {glm::vec3(1, 0, 0), glm::vec3(0, 1, 0)};
-
-	glm::vec3 backPlane[] = {vertexs[7], vertexs[4], vertexs[0], vertexs[3]};
-	glm::vec3 backPlaneVectors[] = {glm::vec3(0, 1, 0), glm::vec3(1, 0, 0)};
-	
-	texture.push_back(new TexturePlane(bottomPlane, bottomPlaneVectors));
-	texture.push_back(new TexturePlane(topPlane, topPlaneVectors));
-	texture.push_back(new TexturePlane(leftPlane, leftPlaneVectors));
-	texture.push_back(new TexturePlane(rightPlane, righttPlaneVectors));
-	texture.push_back(new TexturePlane(frontPlane, frontPlaneVectors));
-	texture.push_back(new TexturePlane(backPlane, backPlaneVectors));
+	texture.push_back(new TexturePlane(bottomPlane, glm::vec3(0, -1, 0)));
+	texture.push_back(new TexturePlane(topPlane, glm::vec3(0, 1, 0)));
+	texture.push_back(new TexturePlane(leftPlane, glm::vec3(-1, 0, 0)));
+	texture.push_back(new TexturePlane(rightPlane, glm::vec3(1, 0, 0)));
+	texture.push_back(new TexturePlane(frontPlane, glm::vec3(0, 0, 1)));
+	texture.push_back(new TexturePlane(backPlane, glm::vec3(0, 0, -1)));
 	
 	SetTexturesMultiple();
 	_pointLight = new PointLight(20, _lightPosition);
