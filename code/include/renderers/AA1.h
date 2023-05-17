@@ -61,7 +61,7 @@ private:
 
     ModelExploding* catModel;
     Billboard* billboard;
-    TexturePlane* texture;
+    std::vector<TexturePlane*> texture;
     PointLight* _pointLight;
 
     Cube* _lightEmissor;
@@ -89,6 +89,9 @@ private:
     float fovMax;
     float dollyMovement = 3.75f;
 
+
+    glm::vec3 _cubePosition;
+    
     bool explode = false;
     bool cubeMultiple = true;
 

@@ -2,7 +2,7 @@
 
 Texturing::Texturing(int width, int height) : Renderer(width, height)
 {
-	textureObject = new TexturePlane();
+	//textureObject = new TexturePlane();
 }
 
 Texturing::~Texturing()

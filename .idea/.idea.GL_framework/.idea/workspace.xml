@@ -22,6 +22,7 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/code/include/GL/glew.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/code/include/glm/gtc/matrix_transform.inl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/code/include/imgui/imgui.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -85,6 +86,9 @@
       <workItem from="1680789859184" duration="1231000" />
       <workItem from="1680808623243" duration="1040000" />
       <workItem from="1681136725913" duration="1655000" />
+      <workItem from="1684137017555" duration="198000" />
+      <workItem from="1684158080899" duration="2090000" />
+      <workItem from="1684311425011" duration="9253000" />
     </task>
     <servers />
   </component>
