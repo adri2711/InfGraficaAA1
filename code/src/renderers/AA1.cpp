@@ -6,14 +6,14 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 
 	floor = new TexturePlane("resources/ground.jpg", glm::vec3(0.f, -1.f, 0.f), 90.f, glm::vec3(1.f, 0.f, 0.f), glm::vec3(100.f, 100.f, 1.f));
 	for (int i = 0; i < treeAmount; i++) {
-		std::string path = "resources/trees/treex.jpg";
-		path[20] = rand() % 10 + '0';
+		std::string path = "resources/trees/treex.png";
+		path[20] = rand() % 3 + '0';
 		char* pathc = (char*)path.c_str();
 		glm::vec3 pos;
 		do {
-			pos = glm::vec3(float(rand() % playArea) * 2.f - playArea, 2.4f, float(rand() % playArea) * 2.f - playArea);
+			pos = glm::vec3(float(rand() % playArea) * 2.f - playArea, 4.0f, float(rand() % playArea) * 2.f - playArea);
 		} while (vec3Modulo(pos) < carTrajectoryRadius * 1.2f && vec3Modulo(pos) > carTrajectoryRadius * 0.8f);
-		Billboard temp = Billboard(8.f, pathc, "shaders/Billboard", pos, 0.f, glm::vec3(0.f, 1.f, 0.f), glm::vec3(1.f, 1.f, 1.f));
+		Billboard temp = Billboard(10.f, pathc, "shaders/Billboard", pos, 0.f, glm::vec3(0.f, 1.f, 0.f), glm::vec3(1.f, 1.f, 1.f));
 		trees.push_back(temp);
 		trees.back().Init();
 	}
