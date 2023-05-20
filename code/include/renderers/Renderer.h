@@ -31,7 +31,7 @@ public:
 protected:
 	float FOV = glm::radians(65.f);
 	float zNear = 1.f;
-	float zFar = 50.f;
+	float zFar = 100.f;
 	int width;
 	int height;
 

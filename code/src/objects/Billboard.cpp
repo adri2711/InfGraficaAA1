@@ -9,7 +9,6 @@ Billboard::Billboard(float size, char* texturePath, char* shaderPath, glm::vec3 
 	this->size = size;
 	this->texturePath = texturePath;
 	this->shaderPath = shaderPath;
-	Init();
 }
 
 Billboard::~Billboard()
@@ -136,6 +135,7 @@ void Billboard::LoadTexture()
 {
 	//Load image image un CPU
 	int imageWidth, imageHeight, numberChannels;
+	std::cout << texturePath << std::endl;
 	unsigned char* data = stbi_load(texturePath, &imageWidth, &imageHeight, &numberChannels, 0);
 
 	if (data)

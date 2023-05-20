@@ -11,7 +11,8 @@ class Model : public Object
 public:
 
 	glm::vec3 color;
-	float dt;
+	float dt = 0.f;
+	float elapsedTime = 0.f;
 
 	Model(char* modelPath, char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation, glm::vec3 scale);
 	Model(char* modelPath, char* shaderPath, glm::vec3 position, glm::vec3 scale);

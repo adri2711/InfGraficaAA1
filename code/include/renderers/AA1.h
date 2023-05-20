@@ -1,5 +1,6 @@
 #pragma once
-#include "objects/ModelExploding.h"
+#include "objects/TexturePlane.h"
+#include "objects/Model.h"
 #include "objects/Billboard.h"
 #include "objects/PointLight.h"
 #include "objects/Cube.h"
@@ -12,7 +13,6 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <cmath>
-#include "objects/TexturePlane.h"
 #include <iostream>
 #include <lerp.h>
 
@@ -24,7 +24,17 @@ private:
     GLuint VBO;
 
     TexturePlane* floor;
-    Model* cars;
+    std::vector<Model> cars;
+    std::vector<Billboard> trees;
+
+    int maxCars = 7;
+    int treeAmount = 20;
+    float carSpeed = 500.f;
+    float carTrajectoryRadius = 20.f;
+    int playArea = 40;
+    float carTimer = 0;
+
+    float vec3Modulo(glm::vec3 in);
 
 public:
     AA1(int width, int height);
