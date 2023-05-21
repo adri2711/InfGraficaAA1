@@ -31,7 +31,6 @@ void main(){
     vec4 camBillboardVec = mv_Matrix * objectMatrix * gl_in[0].gl_Position; //Vector between cam and billboard in cam space
     vec4 auxVec = camBillboardVec + vec4(0, 1, 0, 0);
     vec4 hDir = normalize(vec4(cross(camBillboardVec.xyz, auxVec.xyz), 0));
-    //vec4 vDir = normalize(vec4(cross(camBillboardVec.xyz, hDir.xyz), 0));
-    vec4 vDir = mv_Matrix * objectMatrix * vec4(0, -1, 0, 0);
+    vec4 vDir = normalize(vec4(cross(camBillboardVec.xyz, hDir.xyz), 0));
     GenerateQuad(hDir, vDir, quadSize);
 }
