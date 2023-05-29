@@ -26,6 +26,7 @@ private:
 
     TexturePlane* floor;
     std::vector<Billboard> trees;
+    std::vector<Model> _cars;
 
     Instance* _instanceCar;
 
@@ -33,9 +34,11 @@ private:
     int treeAmount = 20;
     int playArea = 40;
     float carTimer = 0;
+    float carSpeed = 500.f;
     float carTrajectoryRadius = 20.f;
 
     bool _changeView;
+    bool _changeCharge;
 
     glm::vec3 _lastCameraPosition;
     float _lastCameraYRotation;

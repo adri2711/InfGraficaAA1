@@ -164,7 +164,7 @@ void Instance::SetupBuffers()
 void Instance::Race(bool changeView, float* panv, float* rota, CameraTransforms cam, float dt)
 {
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < _cars.size(); i++) {
         float speed = carSpeed / carTrajectoryRadius;
         float t = _cars[i].elapsedTime * speed;
         float a = glm::radians(t);
