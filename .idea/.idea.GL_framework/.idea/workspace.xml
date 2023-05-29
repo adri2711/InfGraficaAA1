@@ -22,11 +22,15 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/code/include/GL/glew.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/code/include/glm/gtc/matrix_transform.inl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/code/include/imgui/imgui.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
   </component>
   <component name="ProjectId" id="2NC9GZJTlDeiqXJ6cnb9wOotyCT" />
   <component name="ProjectViewState">
@@ -85,6 +89,9 @@
       <workItem from="1680789859184" duration="1231000" />
       <workItem from="1680808623243" duration="1040000" />
       <workItem from="1681136725913" duration="1655000" />
+      <workItem from="1685094800612" duration="3854000" />
+      <workItem from="1685136691403" duration="817000" />
+      <workItem from="1685177426236" duration="6018000" />
     </task>
     <servers />
   </component>

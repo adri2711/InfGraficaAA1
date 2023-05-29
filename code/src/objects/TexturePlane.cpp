@@ -67,17 +67,11 @@ void TexturePlane::GenerateTexture() {
 
 	if (data)
 	{
-		std::cout << texturePath << " loaded" << std::endl;
 		//Generate texture
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		//Handle error
-		std::cerr << "Error loading the texture: " << texturePath << std::endl;
 	}
 
 	stbi_image_free(data);

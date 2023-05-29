@@ -17,6 +17,8 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 		trees.push_back(temp);
 		trees.back().Init();
 	}
+
+	_car = new Car(1);
 }
 
 float AA1::vec3Modulo(glm::vec3 in) {
@@ -28,38 +30,40 @@ AA1::~AA1()
 }
 
 void AA1::render(float dt)
-{	
+{
+	
 	floor->SetObjectMatrix(floor->GetTranslationMatrix() * floor->GetRotationMatrix() * floor->GetScaleMatrix());
 	floor->setCam(_cam);
 	floor->draw(dt);
 
-	carTimer -= dt;
-	if (carTimer <= 0 && cars.size() < maxCars) {
-		Model tempm = Model("resources/cotxe.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), 0.f, glm::vec3(1.f, 1.f, 1.f), glm::vec3(.3f, .3f, .3f));
-		cars.push_back(tempm);
-		cars.back().InitModel();
-		carTimer = rand() % 2 + 1.f;
-	}
-
 	for (int i = 0; i < trees.size(); i++) {
-		trees[i].SetObjectMatrix(trees[i].GetTranslationMatrix() * trees[i].GetRotationMatrix() * trees[i].GetScaleMatrix());
 		trees[i].setCam(_cam);
 		trees[i].draw(dt);
 	}
 
-	for (int i = 0; i < cars.size(); i++) {
-		float speed = carSpeed / carTrajectoryRadius;
-		float t = cars[i].elapsedTime * speed;
-		float a = glm::radians(t);
-		cars[i].Move(glm::vec3(cos(a) * carTrajectoryRadius, 0.f, sin(a) * carTrajectoryRadius));
-		cars[i].Rotate(((int)t * 1000 % 360000) / 1000.f, glm::vec3(0.f, 1.f, 0.f));
-		cars[i].SetObjectMatrix(cars[i].GetTranslationMatrix() * cars[i].GetRotationMatrix() * cars[i].GetScaleMatrix());
-		cars[i].setCam(_cam);
-		cars[i].draw(dt);
-	}
+	_car->Race(_changeView, panv, rota[0], dt);
 }
 
 void AA1::renderGUI()
 {
+	if (ImGui::Button("Change View"))
+	{
+		_changeView = !_changeView;
+		if (_changeView)
+		{
+			_lastCameraPosition[0] = panv[0];
+			_lastCameraPosition[1] = panv[1];
+			_lastCameraPosition[2] = panv[2];
 
+			_lastCameraYRotation = rota[0];
+		}
+		else
+		{
+			panv[0] = _lastCameraPosition[0];
+			panv[1] = _lastCameraPosition[1];
+			panv[2] = _lastCameraPosition[2];
+
+			rota[0] = _lastCameraYRotation;
+		}
+	}
 }

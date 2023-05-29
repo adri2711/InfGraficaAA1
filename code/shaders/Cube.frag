@@ -4,8 +4,8 @@ in vec4 vert_Normal;
 out vec4 out_Color;
 
 uniform mat4 mv_Mat;
-uniform vec3 color;
+uniform vec4 color;
 
 void main() {
-	out_Color = vec4(color, 1.f);
+	out_Color = color;
 }

@@ -25,6 +25,7 @@ public:
 	std::vector< glm::vec2 > GetUvs();
 	std::vector< glm::vec3 > GetNormals();
 	virtual void draw(float dt) override;
+	virtual void DrawModel();
 
 protected:
 
@@ -37,7 +38,6 @@ protected:
 	virtual void SetupBuffers();
 
 	virtual void SetupUniformsModel();
-	virtual void DrawModel();
 	virtual void SetupUniformsNormals();
 	virtual void DrawNormals();
 

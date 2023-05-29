@@ -2,8 +2,8 @@
 #include "objects/TexturePlane.h"
 #include "objects/Model.h"
 #include "objects/Billboard.h"
+#include "objects/Car.h"
 #include "objects/PointLight.h"
-#include "objects/Cube.h"
 #include "objects/Cube.h"
 #include "Renderer.h"
 #include "Program.h"
@@ -16,6 +16,8 @@
 #include <iostream>
 #include <lerp.h>
 
+class Car;
+
 class AA1 : public Renderer
 {
 private:
@@ -24,15 +26,20 @@ private:
     GLuint VBO;
 
     TexturePlane* floor;
-    std::vector<Model> cars;
     std::vector<Billboard> trees;
 
-    int maxCars = 7;
+    Car* _car;
+
+    int maxCars = 10;
     int treeAmount = 20;
-    float carSpeed = 500.f;
-    float carTrajectoryRadius = 20.f;
     int playArea = 40;
     float carTimer = 0;
+    float carTrajectoryRadius = 20.f;
+
+    bool _changeView;
+
+    glm::vec3 _lastCameraPosition;
+    float _lastCameraYRotation;
 
     float vec3Modulo(glm::vec3 in);
 

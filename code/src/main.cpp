@@ -7,6 +7,8 @@
 
 #include <GL_framework.h>
 #include <renderers/AA1.h>
+#include <renderers/TransparencyExercise.h>
+#include <renderers/FrameBufferExercise.h>
 //#include <renderers/Texturing.h>
 
 namespace {

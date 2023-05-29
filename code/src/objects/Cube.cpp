@@ -130,9 +130,9 @@ void Cube::draw(float dt)
 		program->getUniform("mvpMat"),
 		1, GL_FALSE, glm::value_ptr(_cam._MVP)
 	);
-	glUniform3f(
+	glUniform4f(
 		program->getUniform("color"),
-		color.r, color.g, color.b
+		color.r, color.g, color.b, color.a
 	);
 
 	glDrawElements(GL_TRIANGLE_STRIP, numVerts, GL_UNSIGNED_BYTE, 0);
