@@ -141,7 +141,7 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\Axis.cpp" />
     <ClCompile Include="src\objects\Billboard.cpp" />
-    <ClCompile Include="src\objects\Car.cpp">
+    <ClCompile Include="src\objects\Instance.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -379,7 +379,7 @@ xcopy "$(ProjectDir)libs\SDL2.dll" "$(OutDir)" /y /d</Command>
     <ClInclude Include="include\lerp.h" />
     <ClInclude Include="include\objects\Axis.h" />
     <ClInclude Include="include\objects\Billboard.h" />
-    <ClInclude Include="include\objects\Car.h" />
+    <ClInclude Include="include\objects\Instance.h" />
     <ClInclude Include="include\objects\Cube.h" />
     <ClInclude Include="include\objects\Model.h" />
     <ClInclude Include="include\objects\ModelExploding.h" />

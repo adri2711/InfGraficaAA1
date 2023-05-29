@@ -18,7 +18,7 @@ AA1::AA1(int width, int height) : Renderer(width, height)
 		trees.back().Init();
 	}
 
-	_car = new Car(1);
+	_instanceCar = new Instance("resources/cotxe.obj", "shaders/Model", 10);
 }
 
 float AA1::vec3Modulo(glm::vec3 in) {
@@ -31,7 +31,6 @@ AA1::~AA1()
 
 void AA1::render(float dt)
 {
-	
 	floor->SetObjectMatrix(floor->GetTranslationMatrix() * floor->GetRotationMatrix() * floor->GetScaleMatrix());
 	floor->setCam(_cam);
 	floor->draw(dt);
@@ -41,7 +40,7 @@ void AA1::render(float dt)
 		trees[i].draw(dt);
 	}
 
-	_car->Race(_changeView, panv, rota[0], dt);
+	_instanceCar->Race(_changeView, panv, rota, _cam, dt);
 }
 
 void AA1::renderGUI()
@@ -56,6 +55,7 @@ void AA1::renderGUI()
 			_lastCameraPosition[2] = panv[2];
 
 			_lastCameraYRotation = rota[0];
+			_lastCameraXRotation = rota[1];
 		}
 		else
 		{
@@ -64,6 +64,7 @@ void AA1::renderGUI()
 			panv[2] = _lastCameraPosition[2];
 
 			rota[0] = _lastCameraYRotation;
+			rota[1] = _lastCameraXRotation;
 		}
 	}
 }

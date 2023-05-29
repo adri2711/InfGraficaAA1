@@ -2,9 +2,9 @@
 #include "objects/TexturePlane.h"
 #include "objects/Model.h"
 #include "objects/Billboard.h"
-#include "objects/Car.h"
 #include "objects/PointLight.h"
 #include "objects/Cube.h"
+#include "objects/Instance.h"
 #include "Renderer.h"
 #include "Program.h"
 #include <stdio.h>
@@ -16,7 +16,6 @@
 #include <iostream>
 #include <lerp.h>
 
-class Car;
 
 class AA1 : public Renderer
 {
@@ -28,7 +27,7 @@ private:
     TexturePlane* floor;
     std::vector<Billboard> trees;
 
-    Car* _car;
+    Instance* _instanceCar;
 
     int maxCars = 10;
     int treeAmount = 20;
@@ -40,6 +39,7 @@ private:
 
     glm::vec3 _lastCameraPosition;
     float _lastCameraYRotation;
+    float _lastCameraXRotation;
 
     float vec3Modulo(glm::vec3 in);
 

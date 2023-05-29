@@ -27,7 +27,8 @@ Object::Object(glm::vec3 position)
 
 Object::Object()
 {
-    
+    glDeleteBuffers(3, VBO);
+    glDeleteVertexArrays(1, &VAO);
 }
 
 Object::~Object()

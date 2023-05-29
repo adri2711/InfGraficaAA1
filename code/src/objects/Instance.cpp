@@ -1,39 +1,10 @@
 #pragma warning(disable: 4996)
-#include "objects/Model.h"
-#include "stb_image.h"
+#include "objects/Instance.h"
+#include "glm/gtx/string_cast.hpp"
+#include <iostream>
 
-Model::Model(char* modelPath, char* shaderPath, glm::vec3 position, float angle, glm::vec3 rotation,
-             glm::vec3 scale): Object(position, angle, rotation, scale)
-{
-	this->modelPath = modelPath;
-	this->shaderPath = shaderPath;
-
-	Move(position);
-	Rotate(angle, rotation);
-	Scale(scale);
-	SetObjectMatrix(GetTranslationMatrix() * GetRotationMatrix() * GetScaleMatrix());
-}
-
-Model::Model(char* modelPath, char* shaderPath, glm::vec3 position, glm::vec3 scale): Object(position, scale)
-{
-	this->modelPath = modelPath;
-	this->shaderPath = shaderPath;
-}
-
-Model::Model(char* modelPath, char* shaderPath, glm::vec3 position): Object(position)
-{
-	this->modelPath = modelPath;
-	this->shaderPath = shaderPath;
-}
-
-Model::Model(char* modelPath, char* shaderPath): Object()
-{
-	this->modelPath = modelPath;
-	this->shaderPath = shaderPath;
-}
-
-void Model::InitModel()
-{
+Instance::Instance(char* modelPath, char* shaderPath, int carsNum)
+{    
 	loadOBJ(modelPath, vertices, uvs, normals);
 
 	SetupProgram(shaderPath);
@@ -44,20 +15,19 @@ void Model::InitModel()
 
 	SetupBuffers();
 
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+    for (int i = 0; i < carsNum; ++i)
+    {
+        _cars.push_back(Model("resources/cotxe.obj", "shaders/Model", glm::vec3(0.0f, -0.3f, -3.0f), 0.f, glm::vec3(0.f, 1.f, 0.f), glm::vec3(.3f, .3f, .3f)));
+        _cars[i].elapsedTime = 100 - (100 / carsNum) * i;
+    }
 }
 
-
-Model::~Model()
+Instance::~Instance()
 {
-	glDeleteBuffers(3, VBO);
-	glDeleteVertexArrays(1, &VAO);
-//	delete program;
 }
 
-void Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std::vector<glm::vec2>& out_uvs, std::vector<glm::vec3>& out_normals)
-{	
+void Instance::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std::vector<glm::vec2>& out_uvs, std::vector<glm::vec3>& out_normals)
+{
 	std::vector< unsigned int > vertexIndices, uvIndices, normalIndices;
 	std::vector< glm::vec3 > temp_vertices;
 	std::vector< glm::vec2 > temp_uvs;
@@ -130,23 +100,14 @@ void Model::loadOBJ(const char* path, std::vector<glm::vec3>& out_vertices, std:
 	fclose(file);
 }
 
-std::vector< glm::vec3 > Model::GetVertices()
-{
-	return vertices;
-}
 
-std::vector<glm::vec3> Model::GetNormals()
-{
-	return normals;
-}
-
-void Model::SetupProgram(std::string shaderPath)
+void Instance::SetupProgram(std::string shaderPath)
 {
 	std::string vertexPath = std::string(shaderPath).append(".vert");
 	std::string fragmentPath = std::string(shaderPath).append(".frag");
 
 	// Initialize program
-	program = new Program("Model");
+	program = new Program("Instance");
 	program->compileAndAttachShader(vertexPath.c_str(), GL_VERTEX_SHADER, "vertex");
 	program->compileAndAttachShader(fragmentPath.c_str(), GL_FRAGMENT_SHADER, "fragment");
 
@@ -155,7 +116,7 @@ void Model::SetupProgram(std::string shaderPath)
 	program->bindAttribLocation(1, "in_Normal");
 }
 
-void Model::SetupProgramNormal(std::string shaderPath)
+void Instance::SetupProgramNormal(std::string shaderPath)
 {
 	programNormal = new Program("Normal");
 
@@ -171,7 +132,7 @@ void Model::SetupProgramNormal(std::string shaderPath)
 	programNormal->bindAttribLocation(1, "in_Normal");
 }
 
-void Model::SetupBuffers()
+void Instance::SetupBuffers()
 {
 	// Initialize buffers
 	glGenVertexArrays(1, &VAO);
@@ -194,69 +155,78 @@ void Model::SetupBuffers()
 
 	int imageWidth, imageHeight, numberChannels;
 	unsigned char* data = stbi_load( "", &imageHeight, &imageHeight, &numberChannels, 0);*/
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 }
 
-void Model::SetupUniformsModel()
+void Instance::Race(bool changeView, float* panv, float* rota, CameraTransforms cam, float dt)
 {
-	glUniformMatrix4fv(
-		program->getUniform("objectMatrix"),
-		1, GL_FALSE, glm::value_ptr(_objectMatrix)
-	);
-	glUniformMatrix4fv(
-		program->getUniform("mv_Matrix"),
-		1, GL_FALSE, glm::value_ptr(_cam._modelView)
-	);
-	glUniformMatrix4fv(
-		program->getUniform("mvpMatrix"),
-		1, GL_FALSE, glm::value_ptr(_cam._MVP)
-	);
-	glUniform3f(
-		program->getUniform("color"),
-		color.r, color.g, color.b
-	);
+
+    for (int i = 0; i < 10; i++) {
+        float speed = carSpeed / carTrajectoryRadius;
+        float t = _cars[i].elapsedTime * speed;
+        float a = glm::radians(t);
+        glm::vec3 position = glm::vec3(cos(a) * carTrajectoryRadius, -0.8f, sin(a) * carTrajectoryRadius);
+        int rotation = ((int)t * 1000 % 360000) / 1000.f;
+        _cars[i].Move(position);
+        _cars[i].Rotate(rotation, glm::vec3(0.f, 1.f, 0.f));
+		
+        if (i == 0)
+        {
+            if (changeView)
+            {
+                panv[0] = position[0];
+                panv[1] = position[1];
+                panv[2] = position[2];
+			
+                rota[0] = rotation;
+				rota[1] = 0;
+            }
+        }
+		
+        _cars[i].SetObjectMatrix(_cars[i].GetTranslationMatrix() * _cars[i].GetRotationMatrix() * _cars[i].GetScaleMatrix());
+        _cars[i].elapsedTime += dt;
+		_objectMatrixArray[i] = _cars[i].GetObjectMatrix();
+    }
+
+	setCam(cam);
+		
+	draw(dt);
+
 }
 
-void Model::DrawModel()
+void Instance::draw(float dt)
 {
-	program->use();
-	SetupUniformsModel();
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-	program->unuse();
-}
-
-void Model::SetupUniformsNormals()
-{
-	glUniformMatrix4fv(
-		programNormal->getUniform("objectMatrix"),
-		1, GL_FALSE, glm::value_ptr(_objectMatrix)
-	);
-	glUniformMatrix4fv(
-		programNormal->getUniform("mvpMatrix"),
-		1, GL_FALSE, glm::value_ptr(_cam._MVP)
-	);
-}
-
-void Model::DrawNormals()
-{
-	programNormal->use();
-	SetupUniformsNormals();
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-	programNormal->unuse();
-}
-
-std::vector<glm::vec2> Model::GetUvs()
-{
-	return uvs;
-}
-
-void Model::draw(float dt)
-{
-	this->dt = dt;
-	elapsedTime += dt;
 
 	glBindVertexArray(VAO);
 
-	DrawModel();
+	program->use();
+	SetupUniformsModel();
+	glDrawArraysInstanced(GL_TRIANGLES, 0, vertices.size(), _cars.size());
+	program->unuse();
 
 	glBindVertexArray(0);
+}
+
+void Instance::SetupUniformsModel()
+{
+
+    glUniformMatrix4fv(
+        program->getUniform("objectMatrixArray"),
+        _cars.size(), GL_FALSE, glm::value_ptr(_objectMatrixArray[0])
+    );
+    glUniformMatrix4fv(
+        program->getUniform("mv_Matrix"),
+        1, GL_FALSE, glm::value_ptr(_cam._modelView)
+    );
+    glUniformMatrix4fv(
+        program->getUniform("mvpMatrix"),
+        1, GL_FALSE, glm::value_ptr(_cam._MVP)
+    );
+    glUniform3f(
+        program->getUniform("color"),
+        color.r, color.g, color.b
+    );
 }
