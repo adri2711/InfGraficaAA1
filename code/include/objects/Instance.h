@@ -11,9 +11,6 @@ private:
     std::vector<Model> _cars;
 
     glm::mat4 _objectMatrixArray[10];
-    
-    float carSpeed = 500.f;
-    float carTrajectoryRadius = 20.f;
 
     void SetupUniformsModel();
     
@@ -28,7 +25,7 @@ public:
     void SetupProgramNormal(std::string shaderPath);
     void SetupBuffers();
 
-    void Race(bool changeView, float* panv, float* rota, CameraTransforms cam, float dt);
+    void Race(float carSpeed, float carTrajectoryRadius, bool changeView, float* panv, float* rota, CameraTransforms cam, float dt);
 
     void draw(float dt) override;
     

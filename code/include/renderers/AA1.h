@@ -27,6 +27,7 @@ private:
     TexturePlane* floor;
     std::vector<Billboard> trees;
     std::vector<Model> _cars;
+    Model* _cat;
 
     Instance* _instanceCar;
 
@@ -36,6 +37,8 @@ private:
     float carTimer = 0;
     float carSpeed = 500.f;
     float carTrajectoryRadius = 20.f;
+
+    float _elapsedTime = 0;
 
     bool _changeView;
     bool _changeCharge;

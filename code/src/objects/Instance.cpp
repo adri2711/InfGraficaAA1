@@ -161,7 +161,7 @@ void Instance::SetupBuffers()
 
 }
 
-void Instance::Race(bool changeView, float* panv, float* rota, CameraTransforms cam, float dt)
+void Instance::Race(float carSpeed, float carTrajectoryRadius, bool changeView, float* panv, float* rota, CameraTransforms cam, float dt)
 {
 
     for (int i = 0; i < _cars.size(); i++) {
@@ -171,23 +171,23 @@ void Instance::Race(bool changeView, float* panv, float* rota, CameraTransforms 
         glm::vec3 position = glm::vec3(cos(a) * carTrajectoryRadius, -0.8f, sin(a) * carTrajectoryRadius);
         int rotation = ((int)t * 1000 % 360000) / 1000.f;
         _cars[i].Move(position);
-        _cars[i].Rotate(rotation, glm::vec3(0.f, 1.f, 0.f));
+        _cars[i].Rotate(rotation, glm::vec3(0.f, 1.f, 0.f));		
 		
         if (i == 0)
         {
             if (changeView)
             {
-                panv[0] = position[0];
-                panv[1] = position[1];
-                panv[2] = position[2];
+                panv[0] = position.x;
+                panv[1] = position.y;
+                panv[2] = position.z;
 			
-                rota[0] = rotation;
+                rota[0] = glm::radians((float)rotation);
 				rota[1] = 0;
             }
         }
-		
-        _cars[i].SetObjectMatrix(_cars[i].GetTranslationMatrix() * _cars[i].GetRotationMatrix() * _cars[i].GetScaleMatrix());
-        _cars[i].elapsedTime += dt;
+
+		_cars[i].SetObjectMatrix(_cars[i].GetTranslationMatrix()* _cars[i].GetRotationMatrix()* _cars[i].GetScaleMatrix());
+		_cars[i].elapsedTime += dt;
 		_objectMatrixArray[i] = _cars[i].GetObjectMatrix();
     }
 

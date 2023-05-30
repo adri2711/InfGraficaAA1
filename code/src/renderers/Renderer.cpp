@@ -1,4 +1,6 @@
 #include <renderers/Renderer.h>
+#include <iostream>
+#include "glm/gtx/string_cast.hpp"
 
 Renderer::Renderer(int width, int height)
 {
