@@ -6,7 +6,6 @@ in vec3 in_Normal;
 uniform mat4 objectMatrix;
 uniform mat4 mv_Matrix;
 uniform mat4 mvpMatrix;
-uniform mat4 objectMatrixArray[10];
 
 out vec4 vert_Normal;
 

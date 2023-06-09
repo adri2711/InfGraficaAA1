@@ -125,8 +125,6 @@ void AA1::renderGUI()
 		}
 	}
 
-	if (ImGui::Button("Change Charge"))
-	{
-		_changeCharge = !_changeCharge;
-	}
+	ImGui::Checkbox("Instancing", &_changeCharge);	
+	
 }
